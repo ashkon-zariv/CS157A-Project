@@ -72,18 +72,34 @@ public class MainFrame {
       frmApartmentManagementSystem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frmApartmentManagementSystem.getContentPane().setLayout(new CardLayout(0, 0));
       
+      
       JPanel SignInPanel = new JPanel();
       frmApartmentManagementSystem.getContentPane().add(SignInPanel, "name_1059160628680983");
       SignInPanel.setLayout(null);
       SignInPanel.setVisible(true);
       
+      JPanel SignUpPanel = new JPanel();
+      frmApartmentManagementSystem.getContentPane().add(SignUpPanel, "name_1059917700298584");
+      SignUpPanel.setLayout(null);
+      SignUpPanel.setVisible(false);
+      
+      JPanel SearchPanel = new JPanel();
+      frmApartmentManagementSystem.getContentPane().add(SearchPanel, "name_1059165859655842");
+      SearchPanel.setLayout(null);
+      SearchPanel.setVisible(false);
+      
+      JPanel MainPanel = new JPanel();
+      frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
+      MainPanel.setLayout(null);
+      MainPanel.setVisible(false);
+      
+      //SignInPanel elements
+      
       Button button = new Button("Sign Up");
-      button.setActionCommand("Sign-up\r\n");
       button.setBounds(179, 185, 158, 48);
       SignInPanel.add(button);
       
       Button button_1 = new Button("Sign In");
-      button_1.setActionCommand("Sign-in");
       button_1.setBounds(388, 185, 172, 48);
       SignInPanel.add(button_1);
       
@@ -109,10 +125,7 @@ public class MainFrame {
       lblPassword.setBounds(104, 121, 88, 20);
       SignInPanel.add(lblPassword);
       
-      JPanel SignUpPanel = new JPanel();
-      frmApartmentManagementSystem.getContentPane().add(SignUpPanel, "name_1059917700298584");
-      SignUpPanel.setLayout(null);
-      SignUpPanel.setVisible(false);
+      //SignUpPanel elements
       
       JButton btnNewButton = new JButton("Sign Up");
       btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -189,63 +202,106 @@ public class MainFrame {
       lblZipCode.setBounds(371, 219, 127, 22);
       SignUpPanel.add(lblZipCode);
       
+      //Error asterisks
+      
       JLabel label = new JLabel("*");
-      label.setEnabled(false);
       label.setForeground(Color.RED);
       label.setFont(new Font("Tahoma", Font.BOLD, 16));
       label.setBounds(528, 19, 46, 14);
       SignUpPanel.add(label);
+      label.setVisible(false);
       
       JLabel label_1 = new JLabel("*");
-      label_1.setEnabled(false);
       label_1.setForeground(Color.RED);
       label_1.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_1.setBounds(528, 60, 46, 14);
       SignUpPanel.add(label_1);
+      label_1.setVisible(false);
       
       JLabel label_2 = new JLabel("*");
-      label_2.setEnabled(false);
       label_2.setForeground(Color.RED);
       label_2.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_2.setBounds(528, 101, 46, 14);
       SignUpPanel.add(label_2);
+      label_2.setVisible(false);
       
       JLabel label_3 = new JLabel("*");
-      label_3.setEnabled(false);
       label_3.setForeground(Color.RED);
       label_3.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_3.setBounds(528, 140, 46, 14);
       SignUpPanel.add(label_3);
+      label_3.setVisible(false);
       
       JLabel label_4 = new JLabel("*");
-      label_4.setEnabled(false);
       label_4.setForeground(Color.RED);
       label_4.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_4.setBounds(528, 183, 46, 14);
       SignUpPanel.add(label_4);
+      label_4.setVisible(false);
       
       JLabel label_5 = new JLabel("*");
-      label_5.setEnabled(false);
       label_5.setForeground(Color.RED);
       label_5.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_5.setBounds(336, 224, 46, 14);
       SignUpPanel.add(label_5);
+      label_5.setVisible(false);
       
       JLabel label_6 = new JLabel("*");
-      label_6.setEnabled(false);
       label_6.setForeground(Color.RED);
       label_6.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_6.setBounds(634, 224, 46, 14);
       SignUpPanel.add(label_6);
+      label_6.setVisible(false);
       
-      JPanel SearchPanel = new JPanel();
-      frmApartmentManagementSystem.getContentPane().add(SearchPanel, "name_1059165859655842");
-      SearchPanel.setLayout(null);
-      SearchPanel.setVisible(false);
+      //SignUp Button - SignIn Panel
+      button.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            SignInPanel.setVisible(false);
+            SignUpPanel.setVisible(true);
+         }
+      });
       
-      JPanel MainPanel = new JPanel();
-      frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
-      MainPanel.setLayout(null);
-      MainPanel.setVisible(false);
+      //SignUp Button - SignUpPanel
+      btnNewButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            if(textField_1.getText() == null)
+            {
+               label.setVisible(true);
+            }
+            /*
+            if(textField_2.getText() == null)
+            {
+               label_2.setVisible(true);
+            }
+             
+            if(textField_3.getText() == null)
+            {
+               label_3.setVisible(true);
+            }
+            
+            if(textField_4.getText() == null)
+            {
+               label_4.setVisible(true);
+            }
+            
+            if(textField_5.getText() == null)
+            {
+               label_5.setVisible(true);
+            }
+            
+            if(textField_6.getText() == null)
+            {
+               label_6.setVisible(true);
+            }
+            
+            if(textField_6.getText() == null)
+            {
+               label_6.setVisible(true);
+            }
+            */
+         }
+      });
+      
+      
    }
 }
