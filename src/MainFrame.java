@@ -73,17 +73,17 @@ public class MainFrame {
       frmApartmentManagementSystem.getContentPane().setLayout(new CardLayout(0, 0));
       
       
-      JPanel SignInPanel = new JPanel();
+      final JPanel SignInPanel = new JPanel();
       frmApartmentManagementSystem.getContentPane().add(SignInPanel, "name_1059160628680983");
       SignInPanel.setLayout(null);
       SignInPanel.setVisible(true);
       
-      JPanel SignUpPanel = new JPanel();
+      final JPanel SignUpPanel = new JPanel();
       frmApartmentManagementSystem.getContentPane().add(SignUpPanel, "name_1059917700298584");
       SignUpPanel.setLayout(null);
       SignUpPanel.setVisible(false);
       
-      JPanel SearchPanel = new JPanel();
+      final JPanel SearchPanel = new JPanel();
       frmApartmentManagementSystem.getContentPane().add(SearchPanel, "name_1059165859655842");
       SearchPanel.setLayout(null);
       SearchPanel.setVisible(false);
@@ -204,7 +204,7 @@ public class MainFrame {
       
       //Error asterisks
       
-      JLabel label = new JLabel("*");
+      final JLabel label = new JLabel("*");
       label.setForeground(Color.RED);
       label.setFont(new Font("Tahoma", Font.BOLD, 16));
       label.setBounds(528, 19, 46, 14);
