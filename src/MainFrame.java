@@ -2,25 +2,35 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+
 import java.awt.Color;
+
 import javax.swing.JMenuBar;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.JMenu;
 import javax.swing.JTabbedPane;
+
 import java.awt.Component;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.TextArea;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
 import java.awt.Font;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
@@ -37,6 +47,14 @@ public class MainFrame {
    private JTextField textField_3;
    private JTextField textField_7;
    private JPasswordField passwordField_1;
+   
+   private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+         Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+   private static boolean validate(String emailStr) {
+             Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+             return matcher.find();
+     }
 
    /**
     * Launch the application.
@@ -96,10 +114,12 @@ public class MainFrame {
       //SignInPanel elements
       
       Button button = new Button("Sign Up");
+      button.setFont(new Font("Arial", Font.BOLD, 16));
       button.setBounds(179, 185, 158, 48);
       SignInPanel.add(button);
       
       Button button_1 = new Button("Sign In");
+      button_1.setFont(new Font("Arial", Font.BOLD, 16));
       button_1.setBounds(388, 185, 172, 48);
       SignInPanel.add(button_1);
       
@@ -115,21 +135,35 @@ public class MainFrame {
       SignInPanel.add(passwordField);
       
       JLabel lblUsername = new JLabel("Username");
-      lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 11));
+      lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 14));
       lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
-      lblUsername.setBounds(104, 62, 88, 20);
+      lblUsername.setBounds(90, 62, 88, 20);
       SignInPanel.add(lblUsername);
       
       JLabel lblPassword = new JLabel("Password");
-      lblPassword.setFont(new Font("Arial Black", Font.PLAIN, 11));
-      lblPassword.setBounds(104, 121, 88, 20);
+      lblPassword.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      lblPassword.setBounds(90, 120, 88, 20);
       SignInPanel.add(lblPassword);
+      
+      JLabel lblNewLabel_1 = new JLabel("User added successfully!");
+      lblNewLabel_1.setForeground(Color.GREEN);
+      lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      lblNewLabel_1.setBounds(83, 259, 220, 30);
+      SignInPanel.add(lblNewLabel_1);
+      lblNewLabel_1.setVisible(false);
+      
+      JLabel lblNewLabel_2 = new JLabel("User not found!");
+      lblNewLabel_2.setForeground(Color.RED);
+      lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 16));
+      lblNewLabel_2.setBounds(453, 259, 172, 30);
+      SignInPanel.add(lblNewLabel_2);
+      lblNewLabel_2.setVisible(false);
       
       //SignUpPanel elements
       
       JButton btnNewButton = new JButton("Sign Up");
       btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 16));
-      btnNewButton.setBounds(253, 266, 191, 44);
+      btnNewButton.setBounds(256, 267, 191, 44);
       SignUpPanel.add(btnNewButton);
       
       textField_1 = new JTextField();
@@ -197,6 +231,17 @@ public class MainFrame {
       lblZipCode.setBounds(371, 219, 127, 22);
       SignUpPanel.add(lblZipCode);
       
+      passwordField_1 = new JPasswordField();
+      passwordField_1.setBounds(146, 52, 370, 30);
+      SignUpPanel.add(passwordField_1);
+      
+      JLabel lblNewLabel = new JLabel("Error(s) found in marked text field(s).");
+      lblNewLabel.setForeground(Color.RED);
+      lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+      lblNewLabel.setBounds(21, 275, 257, 30);
+      SignUpPanel.add(lblNewLabel);
+      lblNewLabel.setVisible(false);
+      
       //Error asterisks
       
       final JLabel label = new JLabel("*");
@@ -246,10 +291,6 @@ public class MainFrame {
       label_6.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_6.setBounds(634, 224, 46, 14);
       SignUpPanel.add(label_6);
-      
-      passwordField_1 = new JPasswordField();
-      passwordField_1.setBounds(146, 52, 370, 30);
-      SignUpPanel.add(passwordField_1);
       label_6.setVisible(false);
       
       //SignUp Button - SignIn Panel
@@ -264,46 +305,94 @@ public class MainFrame {
       btnNewButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             
-            String password = new String(passwordField.getPassword());
+            char[] password = passwordField_1.getPassword();
             
-            if(textField_1.getText().length() == 0)
+            if(!validate(textField_1.getText()))
             {
                label.setVisible(true);
+               lblNewLabel.setVisible(true);
+               textField_1.setText("");
             }
-            if(password.length() == 0)
+            else
+            {
+               label.setVisible(false);
+            }
+            
+            if(password.length == 0)
             {
                label_1.setVisible(true);
+               lblNewLabel.setVisible(true);
+               passwordField_1.setText("");
+            }
+            else
+            {
+               label_1.setVisible(false);
             }
              
-            /*
-            if(textField_3.getText() == null)
+            if(textField_6.getText().length() == 0)
+            {
+               label_2.setVisible(true);
+               lblNewLabel.setVisible(true);
+               textField_6.setText("");
+            }
+            else
+            {
+               label_2.setVisible(false);
+            }
+                        
+            if(textField_5.getText().length() == 0)
             {
                label_3.setVisible(true);
+               lblNewLabel.setVisible(true);
+               textField_5.setText("");
+            }
+            else
+            {
+               label_3.setVisible(false);
             }
             
-            if(textField_4.getText() == null)
+            if(txtLocation.getText().length() == 0)
             {
                label_4.setVisible(true);
+               lblNewLabel.setVisible(true);
+               txtLocation.setText("");
             }
-            
-            if(textField_5.getText() == null)
+            else
+            {
+               label_4.setVisible(false);
+            }
+
+            if(textField_3.getText().length() == 0)
             {
                label_5.setVisible(true);
+               lblNewLabel.setVisible(true);
+               textField_3.setText("");
+            }
+            else
+            {
+               label_5.setVisible(false);
             }
             
-            if(textField_6.getText() == null)
+            if(textField_7.getText().length() != 5)
             {
                label_6.setVisible(true);
+               lblNewLabel.setVisible(true);
+               textField_7.setText("");
+            }
+            else
+            {
+               label_6.setVisible(false);
             }
             
-            if(textField_6.getText() == null)
+            if(!label.isVisible() && !label_1.isVisible() && !label_2.isVisible()
+                  && !label_3.isVisible() && !label_4.isVisible()
+                  && !label_5.isVisible() && !label_6.isVisible())
             {
-               label_6.setVisible(true);
+               SignUpPanel.setVisible(false);
+               SignInPanel.setVisible(true);
+               lblNewLabel_1.setVisible(true);
             }
-            */
          }
       });
-      
-      
    }
 }
