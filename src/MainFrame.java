@@ -31,12 +31,12 @@ public class MainFrame {
    private JTextField textField;
    private JPasswordField passwordField;
    private JTextField textField_1;
-   private JTextField textField_2;
    private JTextField txtLocation;
    private JTextField textField_5;
    private JTextField textField_6;
    private JTextField textField_3;
    private JTextField textField_7;
+   private JPasswordField passwordField_1;
 
    /**
     * Launch the application.
@@ -136,11 +136,6 @@ public class MainFrame {
       textField_1.setBounds(146, 11, 370, 30);
       SignUpPanel.add(textField_1);
       textField_1.setColumns(10);
-      
-      textField_2 = new JTextField();
-      textField_2.setColumns(10);
-      textField_2.setBounds(146, 52, 370, 30);
-      SignUpPanel.add(textField_2);
       
       txtLocation = new JTextField();
       txtLocation.setColumns(10);
@@ -251,6 +246,10 @@ public class MainFrame {
       label_6.setFont(new Font("Tahoma", Font.BOLD, 16));
       label_6.setBounds(634, 224, 46, 14);
       SignUpPanel.add(label_6);
+      
+      passwordField_1 = new JPasswordField();
+      passwordField_1.setBounds(146, 52, 370, 30);
+      SignUpPanel.add(passwordField_1);
       label_6.setVisible(false);
       
       //SignUp Button - SignIn Panel
@@ -264,16 +263,19 @@ public class MainFrame {
       //SignUp Button - SignUpPanel
       btnNewButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            if(textField_1.getText() == null)
+            
+            String password = new String(passwordField.getPassword());
+            
+            if(textField_1.getText().length() == 0)
             {
                label.setVisible(true);
             }
-            /*
-            if(textField_2.getText() == null)
+            if(password.length() == 0)
             {
-               label_2.setVisible(true);
+               label_1.setVisible(true);
             }
              
+            /*
             if(textField_3.getText() == null)
             {
                label_3.setVisible(true);
