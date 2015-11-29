@@ -34,8 +34,21 @@ import java.util.regex.Pattern;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
+import java.sql.*;
+
 
 public class MainFrame {
+   
+   // JDBC driver name and database URL
+   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+   static final String DB_URL = "jdbc:mysql://localhost/data";
+   
+   //  Database credentials
+   static final String USER = "username";
+   static final String PASS = "password";
+   
+   //  Database connection
+   private static Connection conn = null;
 
    private JFrame frmApartmentManagementSystem;
    private JTextField textField;
@@ -63,6 +76,12 @@ public class MainFrame {
       EventQueue.invokeLater(new Runnable() {
          public void run() {
             try {
+               //Register JDBC driver
+               Class.forName("com.mysql.jdbc.Driver");
+
+               //Open a connection
+               conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           
                MainFrame window = new MainFrame();
                window.frmApartmentManagementSystem.setVisible(true);
             } catch (Exception e) {
@@ -293,6 +312,12 @@ public class MainFrame {
       SignUpPanel.add(label_6);
       label_6.setVisible(false);
       
+      //SignIn Button - SignIn Panel
+      button_1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+         }
+      });
+      
       //SignUp Button - SignIn Panel
       button.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -306,6 +331,15 @@ public class MainFrame {
          public void actionPerformed(ActionEvent e) {
             
             char[] password = passwordField_1.getPassword();
+            String string_pass = new String(password);
+            
+            String email = "'" + textField_1.getText() + "', ";
+            String pass = "'" + string_pass + "', ";
+            String name = "'" + textField_6.getText()+ "', ";
+            String address = "'" + textField_5.getText() + "', ";
+            String city = "'" + txtLocation.getText() + "', ";
+            String state = "'" + textField_3.getText() + "', ";
+            String zip = "'" + textField_7.getText() + "'";
             
             if(!validate(textField_1.getText()))
             {
@@ -388,6 +422,17 @@ public class MainFrame {
                   && !label_3.isVisible() && !label_4.isVisible()
                   && !label_5.isVisible() && !label_6.isVisible())
             {
+               try{
+                  Statement stmt = conn.createStatement();
+                  String sql = "INSERT INTO customer "
+                        + "VALUES (" + email + pass + name 
+                        + address + city + state + zip + ");";
+                  stmt.executeUpdate(sql);
+               }
+               catch (Exception ex){
+                  ex.printStackTrace();
+               }
+               
                SignUpPanel.setVisible(false);
                SignInPanel.setVisible(true);
                lblNewLabel_1.setVisible(true);
