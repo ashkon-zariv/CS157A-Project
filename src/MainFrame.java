@@ -40,11 +40,11 @@ import java.sql.*;
 public class MainFrame {
    
    // JDBC driver name and database URL
-   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   static final String DB_URL = "jdbc:mysql://localhost/data";
+   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+   static final String DB_URL = "jdbc:mysql://cs157a.cq50dnjomap4.us-west-2.rds.amazonaws.com:3306/mydb";
    
    //  Database credentials
-   static final String USER = "username";
+   static final String USER = "guest";
    static final String PASS = "password";
    
    //  Database connection
@@ -424,8 +424,8 @@ public class MainFrame {
             {
                try{
                   Statement stmt = conn.createStatement();
-                  String sql = "INSERT INTO customer "
-                        + "VALUES (" + email + pass + name 
+                  String sql = "INSERT INTO customers "
+                        + "VALUES ('0', " + email + pass + name 
                         + address + city + state + zip + ");";
                   stmt.executeUpdate(sql);
                }
