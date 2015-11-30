@@ -12,6 +12,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.JMenu;
@@ -315,6 +316,21 @@ public class MainFrame {
       //SignIn Button - SignIn Panel
       button_1.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
+             PreparedStatement ps;
+             try {
+                 ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
+                 ps.setString(1, String.valueOf(textField.getText()));
+                 ps.setString(2, String.valueOf(passwordField.getPassword()));
+                 ResultSet result = ps.executeQuery();
+                 if(result.next()){
+                	 JOptionPane.showMessageDialog(null, "Successfully logged in.");
+                 }
+                 else{
+                	 JOptionPane.showMessageDialog(null, "Invalid email or password");
+                 }
+             } catch (SQLException ex) {
+            	 ex.printStackTrace();
+             }
          }
       });
       
