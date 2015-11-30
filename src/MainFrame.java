@@ -139,10 +139,10 @@ public class MainFrame {
 		SignUpPanel.setLayout(null);
 		SignUpPanel.setVisible(false);
 
-		final JPanel SearchPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(SearchPanel, "name_1059165859655842");
-		SearchPanel.setLayout(null);
-		SearchPanel.setVisible(false);
+		final JPanel ReservationPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(ReservationPanel, "name_1059165859655842");
+		ReservationPanel.setLayout(null);
+		ReservationPanel.setVisible(false);
 
 		final JPanel MainPanel = new JPanel();
 		frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
@@ -317,13 +317,13 @@ public class MainFrame {
 		SignInPanel.add(button_1);
 
 		textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.PLAIN, 11));
+		textField.setFont(new Font("Arial", Font.PLAIN, 16));
 		textField.setBounds(178, 80, 389, 30);
 		SignInPanel.add(textField);
 		textField.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 11));
+		passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
 		passwordField.setBounds(177, 136, 390, 30);
 		SignInPanel.add(passwordField);
 
@@ -338,7 +338,7 @@ public class MainFrame {
 		lblPassword.setBounds(80, 139, 88, 20);
 		SignInPanel.add(lblPassword);
 
-		JLabel lblNewLabel_1 = new JLabel("User added successfully!");
+		final JLabel lblNewLabel_1 = new JLabel("User added successfully!");
 		lblNewLabel_1.setForeground(Color.GREEN);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(105, 297, 220, 30);
@@ -434,7 +434,7 @@ public class MainFrame {
 		passwordField_1.setBounds(146, 52, 370, 30);
 		SignUpPanel.add(passwordField_1);
 
-		JLabel lblNewLabel = new JLabel("Error(s) found in marked text field(s).");
+		final JLabel lblNewLabel = new JLabel("Error(s) found in marked text field(s).");
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(21, 275, 257, 30);
@@ -450,42 +450,42 @@ public class MainFrame {
 		SignUpPanel.add(label);
 		label.setVisible(false);
 
-		JLabel label_1 = new JLabel("*");
+		final JLabel label_1 = new JLabel("*");
 		label_1.setForeground(Color.RED);
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_1.setBounds(528, 60, 46, 14);
 		SignUpPanel.add(label_1);
 		label_1.setVisible(false);
 
-		JLabel label_2 = new JLabel("*");
+		final JLabel label_2 = new JLabel("*");
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_2.setBounds(528, 101, 46, 14);
 		SignUpPanel.add(label_2);
 		label_2.setVisible(false);
 
-		JLabel label_3 = new JLabel("*");
+		final JLabel label_3 = new JLabel("*");
 		label_3.setForeground(Color.RED);
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_3.setBounds(528, 140, 46, 14);
 		SignUpPanel.add(label_3);
 		label_3.setVisible(false);
 
-		JLabel label_4 = new JLabel("*");
+		final JLabel label_4 = new JLabel("*");
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_4.setBounds(528, 183, 46, 14);
 		SignUpPanel.add(label_4);
 		label_4.setVisible(false);
 
-		JLabel label_5 = new JLabel("*");
+		final JLabel label_5 = new JLabel("*");
 		label_5.setForeground(Color.RED);
 		label_5.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_5.setBounds(336, 224, 46, 14);
 		SignUpPanel.add(label_5);
 		label_5.setVisible(false);
 
-		JLabel label_6 = new JLabel("*");
+		final JLabel label_6 = new JLabel("*");
 		label_6.setForeground(Color.RED);
 		label_6.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_6.setBounds(634, 224, 46, 14);
@@ -494,51 +494,51 @@ public class MainFrame {
 
 		searchField_1 = new JTextField();
 		searchField_1.setBounds(146, 91, 370, 30);
-		SearchPanel.add(searchField_1);
+		ReservationPanel.add(searchField_1);
 		searchField_1.setColumns(10);
 
 		searchField_2 = new JTextField();
 		searchField_2.setColumns(10);
 		searchField_2.setBounds(146, 132, 370, 30);
-		SearchPanel.add(searchField_2);
+		ReservationPanel.add(searchField_2);
 
 		searchField_3 = new JTextField();
 		searchField_3.setColumns(10);
 		searchField_3.setBounds(146, 173, 370, 30);
-		SearchPanel.add(searchField_3);
+		ReservationPanel.add(searchField_3);
 
 		searchField_4 = new JTextField();
 		searchField_4.setColumns(10);
 		searchField_4.setBounds(146, 214, 370, 30);
-		SearchPanel.add(searchField_4);
+		ReservationPanel.add(searchField_4);
 
 		JButton searchButton = new JButton("Search");
 		searchButton.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		searchButton.setBounds(256, 267, 191, 44);
-		SearchPanel.add(searchButton);
+		ReservationPanel.add(searchButton);
 
 		JLabel location = new JLabel("Location\r\n");
 		location.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		location.setBounds(79, 99, 57, 22);
-		SearchPanel.add(location);
+		ReservationPanel.add(location);
 
 		JLabel startDate = new JLabel("Start Date\r\n");
 		startDate.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		startDate.setBounds(69, 135, 67, 22);
-		SearchPanel.add(startDate);
+		ReservationPanel.add(startDate);
 
 		JLabel endDate = new JLabel("End Date\r\n");
 		endDate.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		endDate.setBounds(74, 176, 62, 22);
-		SearchPanel.add(endDate);
+		ReservationPanel.add(endDate);
 
 		JLabel guest = new JLabel("Number of Guests\r\n");
 		guest.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		guest.setBounds(19, 217, 117, 22);
-		SearchPanel.add(guest);
+		ReservationPanel.add(guest);
 
 
-		JLabel searchLabel = new JLabel("Error(s) found in marked text field(s).");
+		final JLabel searchLabel = new JLabel("Error(s) found in marked text field(s).");
 		searchLabel.setForeground(Color.RED);
 		searchLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		searchLabel.setBounds(21, 275, 257, 30);
@@ -551,33 +551,33 @@ public class MainFrame {
 		searchLabel_0.setForeground(Color.RED);
 		searchLabel_0.setFont(new Font("Tahoma", Font.BOLD, 16));
 		searchLabel_0.setBounds(526, 97, 46, 14);
-		SearchPanel.add(searchLabel_0);
+		ReservationPanel.add(searchLabel_0);
 		searchLabel_0.setVisible(false);
 
-		JLabel searchLabel_1 = new JLabel("*");
+		final JLabel searchLabel_1 = new JLabel("*");
 		searchLabel_1.setForeground(Color.RED);
 		searchLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		searchLabel_1.setBounds(526, 138, 46, 14);
-		SearchPanel.add(searchLabel_1);
+		ReservationPanel.add(searchLabel_1);
 		searchLabel_1.setVisible(false);
 
-		JLabel searchLabel_2 = new JLabel("*");
+		final JLabel searchLabel_2 = new JLabel("*");
 		searchLabel_2.setForeground(Color.RED);
 		searchLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
 		searchLabel_2.setBounds(526, 179, 46, 14);
-		SearchPanel.add(searchLabel_2);
+		ReservationPanel.add(searchLabel_2);
 		searchLabel_2.setVisible(false);
 
-		JLabel searchLabel_3 = new JLabel("*");
+		final JLabel searchLabel_3 = new JLabel("*");
 		searchLabel_3.setForeground(Color.RED);
 		searchLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
 		searchLabel_3.setBounds(526, 220, 46, 14);
-		SearchPanel.add(searchLabel_3);
+		ReservationPanel.add(searchLabel_3);
 
 		JLabel lblNewLabel_3 = new JLabel("Requests");
 		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		lblNewLabel_3.setBounds(302, 11, 117, 38);
-		SearchPanel.add(lblNewLabel_3);
+		ReservationPanel.add(lblNewLabel_3);
 		searchLabel_3.setVisible(false);
 
 		searchButton.addActionListener(new ActionListener() {
@@ -643,7 +643,7 @@ public class MainFrame {
 						ex.printStackTrace();
 					}
 
-					SearchPanel.setVisible(false);
+					ReservationPanel.setVisible(false);
 					MainPanel.setVisible(true);
 				}
 			}
@@ -667,32 +667,32 @@ public class MainFrame {
 		list.setBounds(232, 68, 469, 287);
 		AccountPanel.add(list);
 		
-		JLabel lblNewLabel_4 = new JLabel("");
+		final JLabel lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(22, 92, 200, 29);
 		AccountPanel.add(lblNewLabel_4);
 		
-		JLabel label_7 = new JLabel("");
+		final JLabel label_7 = new JLabel("");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_7.setBounds(22, 132, 200, 29);
 		AccountPanel.add(label_7);
 		
-		JLabel label_8 = new JLabel("");
+		final JLabel label_8 = new JLabel("");
 		label_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_8.setBounds(22, 172, 200, 29);
 		AccountPanel.add(label_8);
 		
-		JLabel label_9 = new JLabel("");
+		final JLabel label_9 = new JLabel("");
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_9.setBounds(22, 212, 200, 29);
 		AccountPanel.add(label_9);
 		
-		JLabel label_10 = new JLabel("");
+		final JLabel label_10 = new JLabel("");
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_10.setBounds(22, 253, 200, 29);
 		AccountPanel.add(label_10);
 		
-		JLabel label_11 = new JLabel("");
+		final JLabel label_11 = new JLabel("");
 		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
@@ -714,7 +714,7 @@ public class MainFrame {
                ResultSet result = ps.executeQuery();
                if(result.next()){
                   JOptionPane.showMessageDialog(null, "Successfully logged in.");
-                  SearchPanel.setVisible(true);
+                  MainPanel.setVisible(true);
                   SignInPanel.setVisible(false);
                }
                else{
