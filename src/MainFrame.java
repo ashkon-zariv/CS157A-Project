@@ -70,6 +70,9 @@ public class MainFrame {
 	private JTextField searchField_3;
 	private JTextField searchField_4;
 	private JPasswordField passwordField_1;
+	
+	private String u_username;
+	private String u_pass;
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -206,8 +209,13 @@ public class MainFrame {
 		   public Class getColumnClass(int columnIndex) {
 		      return columnTypes[columnIndex];
 		   }
+		   boolean[] columnEditables = new boolean[] {
+		      false, false, false, false, false, false, false
+		   };
+		   public boolean isCellEditable(int row, int column) {
+		      return columnEditables[column];
+		   }
 		});
-		
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(55);
 		table.getColumnModel().getColumn(1).setResizable(false);
@@ -226,82 +234,75 @@ public class MainFrame {
 		
 		JLabel zipLabel = new JLabel("Zip Code");
 		zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		zipLabel.setBounds(555, 20, 86, 26);
+		zipLabel.setBounds(554, 52, 86, 26);
 		MainPanel.add(zipLabel);
 		
 		JLabel bedroomsLabel = new JLabel("# of Bedrooms");
 		bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		bedroomsLabel.setBounds(555, 51, 122, 26);
+		bedroomsLabel.setBounds(554, 89, 122, 26);
 		MainPanel.add(bedroomsLabel);
 		
 		JLabel bathroomsLabel = new JLabel("# of Bathrooms");
 		bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		bathroomsLabel.setBounds(555, 88, 122, 26);
+		bathroomsLabel.setBounds(555, 126, 122, 26);
 		MainPanel.add(bathroomsLabel);
 		
 		JLabel minPriceLabel = new JLabel("Min. Price   $");
 		minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		minPriceLabel.setBounds(533, 118, 122, 26);
+		minPriceLabel.setBounds(533, 163, 122, 26);
 		MainPanel.add(minPriceLabel);
 		
 		JLabel maxPriceLabel = new JLabel("Max Price   $");
 		maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		maxPriceLabel.setBounds(533, 155, 122, 26);
+		maxPriceLabel.setBounds(533, 200, 122, 26);
 		MainPanel.add(maxPriceLabel);
 		
 		bathroomsTextField = new JTextField();
 		bathroomsTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		bathroomsTextField.setColumns(10);
-		bathroomsTextField.setBounds(675, 88, 49, 26);
+		bathroomsTextField.setBounds(675, 126, 49, 26);
 		MainPanel.add(bathroomsTextField);
 		
 		minPriceTextField = new JTextField();
 		minPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		minPriceTextField.setColumns(10);
-		minPriceTextField.setBounds(638, 120, 86, 26);
+		minPriceTextField.setBounds(638, 165, 86, 26);
 		MainPanel.add(minPriceTextField);
 		
 		maxPriceTextField = new JTextField();
 		maxPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		maxPriceTextField.setColumns(10);
-		maxPriceTextField.setBounds(638, 155, 86, 24);
+		maxPriceTextField.setBounds(638, 203, 86, 24);
 		MainPanel.add(maxPriceTextField);
 		
 		JButton accountButton = new JButton("Account Status");
 		accountButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		accountButton.setBounds(532, 195, 176, 58);
+		accountButton.setBounds(533, 295, 191, 58);
 		MainPanel.add(accountButton);
 		
-		JButton backToSearchButton = new JButton("Back to Search");
+		JButton backToSearchButton = new JButton("Filter");
 		backToSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		backToSearchButton.setBounds(532, 264, 176, 58);
+		backToSearchButton.setBounds(533, 249, 191, 35);
 		MainPanel.add(backToSearchButton);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textField_2.setColumns(10);
-		textField_2.setBounds(675, 53, 49, 26);
+		textField_2.setBounds(675, 91, 49, 26);
 		MainPanel.add(textField_2);
 		
 		textField_4 = new JTextField();
 		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textField_4.setColumns(10);
-		textField_4.setBounds(638, 22, 86, 26);
+		textField_4.setBounds(638, 52, 86, 26);
 		MainPanel.add(textField_4);
 		
-		accountButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MainPanel.setVisible(false);
-				AccountPanel.setVisible(true);
-			}
-		});
-		
-		backToSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MainPanel.setVisible(false);
-				SearchPanel.setVisible(true);
-			}
-		});
+		JLabel lblFilterResults = new JLabel("Filter Results");
+		lblFilterResults.setForeground(Color.GRAY);
+		lblFilterResults.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFilterResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
+		lblFilterResults.setBounds(554, 18, 157, 26);
+		MainPanel.add(lblFilterResults);
 
 		//SignInPanel elements
 
@@ -491,28 +492,6 @@ public class MainFrame {
 		SignUpPanel.add(label_6);
 		label_6.setVisible(false);
 
-		//SignIn Button - SignIn Panel
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PreparedStatement ps;
-				try {
-					ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
-					ps.setString(1, String.valueOf(textField.getText()));
-					ps.setString(2, String.valueOf(passwordField.getPassword()));
-					ResultSet result = ps.executeQuery();
-					if(result.next()){
-						JOptionPane.showMessageDialog(null, "Successfully logged in.");
-						SearchPanel.setVisible(true);
-						SignInPanel.setVisible(false);
-					}
-					else{
-						JOptionPane.showMessageDialog(null, "Invalid email or password");
-					}
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
 		searchField_1 = new JTextField();
 		searchField_1.setBounds(146, 91, 370, 30);
 		SearchPanel.add(searchField_1);
@@ -671,8 +650,6 @@ public class MainFrame {
 		});
 		
 		//Account Panel
-
-		
 		JLabel lblNewLabel_31 = new JLabel("Your Account Information");
 		lblNewLabel_31.setFont(new Font("Arial Black", Font.PLAIN, 24));
 		lblNewLabel_31.setBounds(202, 11, 374, 35);
@@ -691,34 +668,106 @@ public class MainFrame {
 		AccountPanel.add(list);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(22, 92, 200, 29);
 		AccountPanel.add(lblNewLabel_4);
 		
 		JLabel label_7 = new JLabel("");
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_7.setBounds(22, 132, 200, 29);
 		AccountPanel.add(label_7);
 		
 		JLabel label_8 = new JLabel("");
+		label_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_8.setBounds(22, 172, 200, 29);
 		AccountPanel.add(label_8);
 		
 		JLabel label_9 = new JLabel("");
+		label_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_9.setBounds(22, 212, 200, 29);
 		AccountPanel.add(label_9);
 		
 		JLabel label_10 = new JLabel("");
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_10.setBounds(22, 253, 200, 29);
 		AccountPanel.add(label_10);
 		
 		JLabel label_11 = new JLabel("");
+		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
+		
+		
+		//SignIn Button - SignIn Panel
+      button_1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            PreparedStatement ps;
+            try {
+               ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
+               
+               u_username = String.valueOf(textField.getText());
+               u_pass = String.valueOf(passwordField.getPassword());
+               
+               ps.setString(1, u_username);
+               ps.setString(2, u_pass);
+               
+               ResultSet result = ps.executeQuery();
+               if(result.next()){
+                  JOptionPane.showMessageDialog(null, "Successfully logged in.");
+                  SearchPanel.setVisible(true);
+                  SignInPanel.setVisible(false);
+               }
+               else{
+                  JOptionPane.showMessageDialog(null, "Invalid email or password");
+               }
+            } catch (SQLException ex) {
+               ex.printStackTrace();
+            }
+         }
+      });
+      
+		//Account Info - Main Panel
+		accountButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            PreparedStatement ps;
+            try{
+            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
+            ps.setString(1, u_username);
+            ps.setString(2, u_pass);
+            
+            ResultSet result = ps.executeQuery();
+            result.next();
+            
+            lblNewLabel_4.setText("Name: " + result.getString("name"));
+            label_7.setText("E-mail: " + result.getString("email"));
+            label_8.setText("Address: " + result.getString("address"));
+            label_9.setText("City: " + result.getString("city"));
+            label_10.setText("State: " + result.getString("state"));
+            label_11.setText("Zip Code: " + result.getString("zip_code"));
+            
+            } catch (SQLException ex) {
+               ex.printStackTrace();
+            }
+            
+            MainPanel.setVisible(false);
+            AccountPanel.setVisible(true);
+            
+         }
+      });
+      
+		//Back Button - Main Panel
+      backToSearchButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            MainPanel.setVisible(false);
+            SearchPanel.setVisible(true);
+         }
+      });
 		
 		//Back Button - Account Panel
 		btnNewButton_1.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent arg0) {
             AccountPanel.setVisible(false);
-            SearchPanel.setVisible(true);
+            MainPanel.setVisible(true);
          }
       });
 
