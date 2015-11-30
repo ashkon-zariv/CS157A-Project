@@ -36,6 +36,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 import java.sql.*;
+import javax.swing.JList;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
 
 
 public class MainFrame {
@@ -110,7 +114,7 @@ public class MainFrame {
 	{
 		frmApartmentManagementSystem = new JFrame();
 		frmApartmentManagementSystem.setTitle("KaoZariv Apartment Database - CS 157A");
-		frmApartmentManagementSystem.setBounds(100, 100, 676, 371);
+		frmApartmentManagementSystem.setBounds(100, 100, 750, 420);
 		frmApartmentManagementSystem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmApartmentManagementSystem.getContentPane().setLayout(new CardLayout(0, 0));
 
@@ -139,48 +143,54 @@ public class MainFrame {
 
 		Button button = new Button("Sign Up");
 		button.setFont(new Font("Arial", Font.BOLD, 16));
-		button.setBounds(179, 185, 158, 48);
+		button.setBounds(148, 205, 177, 52);
 		SignInPanel.add(button);
 
 		Button button_1 = new Button("Sign In");
 		button_1.setFont(new Font("Arial", Font.BOLD, 16));
-		button_1.setBounds(388, 185, 172, 48);
+		button_1.setBounds(392, 205, 185, 52);
 		SignInPanel.add(button_1);
 
 		textField = new JTextField();
 		textField.setFont(new Font("Arial", Font.PLAIN, 11));
-		textField.setBounds(178, 58, 389, 30);
+		textField.setBounds(178, 80, 389, 30);
 		SignInPanel.add(textField);
 		textField.setColumns(10);
 
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Arial", Font.PLAIN, 11));
-		passwordField.setBounds(178, 117, 390, 30);
+		passwordField.setBounds(177, 136, 390, 30);
 		SignInPanel.add(passwordField);
 
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
-		lblUsername.setBounds(90, 62, 88, 20);
+		lblUsername.setBounds(80, 83, 88, 20);
 		SignInPanel.add(lblUsername);
 
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblPassword.setBounds(90, 120, 88, 20);
+		lblPassword.setBounds(80, 139, 88, 20);
 		SignInPanel.add(lblPassword);
 
 		JLabel lblNewLabel_1 = new JLabel("User added successfully!");
 		lblNewLabel_1.setForeground(Color.GREEN);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(83, 259, 220, 30);
+		lblNewLabel_1.setBounds(105, 297, 220, 30);
 		SignInPanel.add(lblNewLabel_1);
 		lblNewLabel_1.setVisible(false);
 
 		JLabel lblNewLabel_2 = new JLabel("User not found!");
 		lblNewLabel_2.setForeground(Color.RED);
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(453, 259, 172, 30);
+		lblNewLabel_2.setBounds(468, 297, 172, 30);
 		SignInPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_5 = new JLabel("Apartment Finder Gateway");
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setFont(new Font("Berlin Sans FB", Font.PLAIN, 24));
+		lblNewLabel_5.setBounds(161, 22, 389, 30);
+		SignInPanel.add(lblNewLabel_5);
 		lblNewLabel_2.setVisible(false);
 
 		//SignUpPanel elements
@@ -499,6 +509,60 @@ public class MainFrame {
 		test.setFont(new Font("Tahoma", Font.BOLD, 16));
 		test.setBounds(250, 250, 100, 14);
 		MainPanel.add(test);
+		
+		//Account Panel
+		JPanel AccountPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
+		AccountPanel.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("Your Account Information");
+		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 24));
+		lblNewLabel_3.setBounds(202, 11, 374, 35);
+		AccountPanel.add(lblNewLabel_3);
+		
+		JButton btnNewButton_1 = new JButton("Back to Search");
+		btnNewButton_1.setBounds(22, 17, 109, 35);
+		AccountPanel.add(btnNewButton_1);
+		
+		JList list = new JList();
+		list.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
+		      new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pending Requests",
+		            TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0))));
+		
+		list.setBounds(232, 68, 469, 287);
+		AccountPanel.add(list);
+		
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setBounds(22, 92, 200, 29);
+		AccountPanel.add(lblNewLabel_4);
+		
+		JLabel label_7 = new JLabel("");
+		label_7.setBounds(22, 132, 200, 29);
+		AccountPanel.add(label_7);
+		
+		JLabel label_8 = new JLabel("");
+		label_8.setBounds(22, 172, 200, 29);
+		AccountPanel.add(label_8);
+		
+		JLabel label_9 = new JLabel("");
+		label_9.setBounds(22, 212, 200, 29);
+		AccountPanel.add(label_9);
+		
+		JLabel label_10 = new JLabel("");
+		label_10.setBounds(22, 253, 200, 29);
+		AccountPanel.add(label_10);
+		
+		JLabel label_11 = new JLabel("");
+		label_11.setBounds(22, 293, 200, 29);
+		AccountPanel.add(label_11);
+		
+		//Back Button - Account Panel
+		btnNewButton_1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent arg0) {
+            AccountPanel.setVisible(false);
+            SearchPanel.setVisible(true);
+         }
+      });
 
 		//SignUp Button - SignIn Panel
 		button.addActionListener(new ActionListener() {
