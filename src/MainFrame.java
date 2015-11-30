@@ -173,21 +173,21 @@ public class MainFrame {
 			{
 				dataSet.next();
 				
-				String tester = dataSet.getString("price");
-				int tester2 = dataSet.getInt("apartment_id");
-				String tester3 = dataSet.getString("name");
-				String tester4 = dataSet.getString("zip_code");
-				int tester5 = dataSet.getInt("accommodates");
-				String tester6 = dataSet.getString("bedrooms");
-				String tester7 = dataSet.getString("bathrooms");
+				String temp = dataSet.getString("price");
+				int temp2 = dataSet.getInt("apartment_id");
+				String temp3 = dataSet.getString("name");
+				String temp4 = dataSet.getString("zip_code");
+				int temp5 = dataSet.getInt("accommodates");
+				String temp6 = dataSet.getString("bedrooms");
+				String temp7 = dataSet.getString("bathrooms");
 				
-				data[count][6] = tester;
-				data[count][0] = tester2;
-				data[count][1] = tester3;
-				data[count][2] = tester4;
-				data[count][3] = tester5;
-				data[count][4] = tester6;
-				data[count][5] = tester7;
+				data[count][6] = temp;
+				data[count][0] = temp2;
+				data[count][1] = temp3;
+				data[count][2] = temp4;
+				data[count][3] = temp5;
+				data[count][4] = temp6;
+				data[count][5] = temp7;
 				
 				count++;
 			}
@@ -204,7 +204,7 @@ public class MainFrame {
 		   }
 		) {
 		   Class[] columnTypes = new Class[] {
-		      String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+		      Integer.class, String.class, String.class, Integer.class, String.class, String.class, String.class
 		   };
 		   public Class getColumnClass(int columnIndex) {
 		      return columnTypes[columnIndex];
