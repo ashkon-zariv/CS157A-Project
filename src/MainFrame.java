@@ -74,11 +74,11 @@ public class MainFrame {
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	private JTable table;
-	private JTextField zipTextField;
-	private JTextField bedroomsTextField;
 	private JTextField bathroomsTextField;
 	private JTextField minPriceTextField;
 	private JTextField maxPriceTextField;
+	private JTextField textField_2;
+	private JTextField textField_4;
 
 	private static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
@@ -152,86 +152,41 @@ public class MainFrame {
 		
 		// Main Panel
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 11, 452, 310);
+		scrollPane.setBounds(10, 11, 513, 360);
 		MainPanel.add(scrollPane);
 
 		table = new JTable();
 		int row = 100;
 		int col = 7;
 		Object[][] data = new Object[row][col];
+		
 		try
 		{
-			PreparedStatement aptid = conn.prepareStatement("SELECT apartment_id FROM apartments");
-			PreparedStatement name = conn.prepareStatement("SELECT name FROM apartments");
-			PreparedStatement zip = conn.prepareStatement("SELECT zip_code FROM apartments");
-			PreparedStatement acc = conn.prepareStatement("SELECT accommodates FROM apartments");
-			PreparedStatement bed = conn.prepareStatement("SELECT bedrooms FROM apartments");
-			PreparedStatement bath = conn.prepareStatement("SELECT bathrooms FROM apartments");
-			PreparedStatement price = conn.prepareStatement("SELECT price FROM apartments");
-
-			ResultSet ps = price.executeQuery();
-			ResultSet as = aptid.executeQuery();
-			ResultSet ns = name.executeQuery();
-			ResultSet zs = zip.executeQuery();
-			ResultSet acs = acc.executeQuery();
-			ResultSet bs = bed.executeQuery();
-			ResultSet bas = bath.executeQuery();
-			
+			PreparedStatement dataStatement = conn.prepareStatement("SELECT * FROM apartments");
+			ResultSet dataSet = dataStatement.executeQuery();
 			int count = 0;
-			int count2 = 0;
-			int count3 = 0;
-			int count4 = 0;
-			int count5 = 0;
-			int count6 = 0;
-			int count7 = 0;
+			
 			while(count < row)
 			{
-				ps.next();
-				String tester = ps.getString("price");
+				dataSet.next();
+				
+				String tester = dataSet.getString("price");
+				int tester2 = dataSet.getInt("apartment_id");
+				String tester3 = dataSet.getString("name");
+				String tester4 = dataSet.getString("zip_code");
+				int tester5 = dataSet.getInt("accommodates");
+				String tester6 = dataSet.getString("bedrooms");
+				String tester7 = dataSet.getString("bathrooms");
+				
 				data[count][6] = tester;
+				data[count][0] = tester2;
+				data[count][1] = tester3;
+				data[count][2] = tester4;
+				data[count][3] = tester5;
+				data[count][4] = tester6;
+				data[count][5] = tester7;
+				
 				count++;
-			}
-			while(count2 < row)
-			{
-				as.next();
-				int tester2 = as.getInt("apartment_id");
-				data[count2][0] = tester2;
-				count2++;
-			}
-			while(count3 < row)
-			{
-				ns.next();
-				String tester2 = ns.getString("name");
-				data[count3][1] = tester2;
-				count3++;
-			}
-			while(count4 < row)
-			{
-				zs.next();
-				String tester2 = zs.getString("zip_code");
-				data[count4][2] = tester2;
-				count4++;
-			}
-			while(count5 < row)
-			{
-				acs.next();
-				int tester2 = acs.getInt("accommodates");
-				data[count5][3] = tester2;
-				count5++;
-			}
-			while(count6 < row)
-			{
-				bs.next();
-				String tester2 = bs.getString("bedrooms");
-				data[count6][5] = tester2;
-				count6++;
-			}
-			while(count7 < row)
-			{
-				bas.next();
-				String tester2 = bas.getString("bathrooms");
-				data[count7][4] = tester2;
-				count7++;
 			}
 		}
 		catch(SQLException ex)
@@ -240,91 +195,99 @@ public class MainFrame {
 		}
 
 		table.setModel(new DefaultTableModel(
-			data,
-			new String[] {
-				"Apt ID", "Name", "Zip Code", "Accommodates", "Bathrooms", "Bedrooms", "Price"
-			}
+		   data,
+		   new String[] {
+		      "Apt ID", "Name", "Zip Code", "# PPL", "Bath", "Bed", "Price"
+		   }
 		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
+		   Class[] columnTypes = new Class[] {
+		      String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+		   };
+		   public Class getColumnClass(int columnIndex) {
+		      return columnTypes[columnIndex];
+		   }
 		});
+		
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setPreferredWidth(41);
+		table.getColumnModel().getColumn(0).setPreferredWidth(55);
 		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(115);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(2).setPreferredWidth(55);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(4).setPreferredWidth(61);
+		table.getColumnModel().getColumn(4).setPreferredWidth(55);
 		table.getColumnModel().getColumn(5).setResizable(false);
-		table.getColumnModel().getColumn(5).setPreferredWidth(57);
+		table.getColumnModel().getColumn(5).setPreferredWidth(55);
 		table.getColumnModel().getColumn(6).setResizable(false);
-		table.getColumnModel().getColumn(6).setPreferredWidth(51);
+		table.getColumnModel().getColumn(6).setPreferredWidth(55);
+		
 		scrollPane.setViewportView(table);
 		
-		JLabel zipLabel = new JLabel("Search by Zip Code");
-		zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		zipLabel.setBounds(462, 18, 122, 26);
+		JLabel zipLabel = new JLabel("Zip Code");
+		zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		zipLabel.setBounds(555, 20, 86, 26);
 		MainPanel.add(zipLabel);
 		
-		zipTextField = new JTextField();
-		zipTextField.setBounds(589, 22, 62, 20);
-		MainPanel.add(zipTextField);
-		zipTextField.setColumns(10);
-		
 		JLabel bedroomsLabel = new JLabel("# of Bedrooms");
-		bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		bedroomsLabel.setBounds(462, 51, 122, 26);
+		bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		bedroomsLabel.setBounds(555, 51, 122, 26);
 		MainPanel.add(bedroomsLabel);
 		
 		JLabel bathroomsLabel = new JLabel("# of Bathrooms");
-		bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		bathroomsLabel.setBounds(462, 88, 122, 26);
+		bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		bathroomsLabel.setBounds(555, 88, 122, 26);
 		MainPanel.add(bathroomsLabel);
 		
 		JLabel minPriceLabel = new JLabel("Min. Price   $");
-		minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		minPriceLabel.setBounds(462, 125, 122, 26);
+		minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		minPriceLabel.setBounds(533, 118, 122, 26);
 		MainPanel.add(minPriceLabel);
 		
 		JLabel maxPriceLabel = new JLabel("Max Price   $");
-		maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		maxPriceLabel.setBounds(462, 162, 122, 26);
+		maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		maxPriceLabel.setBounds(533, 155, 122, 26);
 		MainPanel.add(maxPriceLabel);
 		
-		bedroomsTextField = new JTextField();
-		bedroomsTextField.setColumns(10);
-		bedroomsTextField.setBounds(560, 55, 37, 20);
-		MainPanel.add(bedroomsTextField);
-		
 		bathroomsTextField = new JTextField();
+		bathroomsTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		bathroomsTextField.setColumns(10);
-		bathroomsTextField.setBounds(560, 92, 37, 20);
+		bathroomsTextField.setBounds(675, 88, 49, 26);
 		MainPanel.add(bathroomsTextField);
 		
 		minPriceTextField = new JTextField();
+		minPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		minPriceTextField.setColumns(10);
-		minPriceTextField.setBounds(546, 129, 86, 20);
+		minPriceTextField.setBounds(638, 120, 86, 26);
 		MainPanel.add(minPriceTextField);
 		
 		maxPriceTextField = new JTextField();
+		maxPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		maxPriceTextField.setColumns(10);
-		maxPriceTextField.setBounds(546, 166, 86, 20);
+		maxPriceTextField.setBounds(638, 155, 86, 24);
 		MainPanel.add(maxPriceTextField);
 		
 		JButton accountButton = new JButton("Account Status");
-		accountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		accountButton.setBounds(462, 263, 125, 58);
+		accountButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		accountButton.setBounds(532, 195, 176, 58);
 		MainPanel.add(accountButton);
 		
 		JButton backToSearchButton = new JButton("Back to Search");
-		backToSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		backToSearchButton.setBounds(600, 263, 123, 58);
+		backToSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		backToSearchButton.setBounds(532, 264, 176, 58);
 		MainPanel.add(backToSearchButton);
+		
+		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textField_2.setColumns(10);
+		textField_2.setBounds(675, 53, 49, 26);
+		MainPanel.add(textField_2);
+		
+		textField_4 = new JTextField();
+		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textField_4.setColumns(10);
+		textField_4.setBounds(638, 22, 86, 26);
+		MainPanel.add(textField_4);
 		
 		accountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
