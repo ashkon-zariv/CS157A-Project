@@ -36,6 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 
 public class MainFrame {
@@ -68,6 +69,7 @@ public class MainFrame {
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+	private JTable table;
 
 	private static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
@@ -133,6 +135,127 @@ public class MainFrame {
 		JPanel MainPanel = new JPanel();
 		frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
 		MainPanel.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 11, 452, 310);
+		MainPanel.add(scrollPane);
+
+		table = new JTable();
+		int row = 100;
+		int col = 7;
+		Object[][] data = new Object[row][col];
+		try
+		{
+			PreparedStatement aptid = conn.prepareStatement("SELECT apartment_id FROM apartments");
+			PreparedStatement name = conn.prepareStatement("SELECT name FROM apartments");
+			PreparedStatement zip = conn.prepareStatement("SELECT zip_code FROM apartments");
+			PreparedStatement acc = conn.prepareStatement("SELECT accommodates FROM apartments");
+			PreparedStatement bed = conn.prepareStatement("SELECT bedrooms FROM apartments");
+			PreparedStatement bath = conn.prepareStatement("SELECT bathrooms FROM apartments");
+			PreparedStatement price = conn.prepareStatement("SELECT price FROM apartments");
+
+			ResultSet ps = price.executeQuery();
+			ResultSet as = aptid.executeQuery();
+			ResultSet ns = name.executeQuery();
+			ResultSet zs = zip.executeQuery();
+			ResultSet acs = acc.executeQuery();
+			ResultSet bs = bed.executeQuery();
+			ResultSet bas = bath.executeQuery();
+			
+			int count = 0;
+			int count2 = 0;
+			int count3 = 0;
+			int count4 = 0;
+			int count5 = 0;
+			int count6 = 0;
+			int count7 = 0;
+			while(count < row)
+			{
+				ps.next();
+				String tester = ps.getString("price");
+				data[count][6] = tester;
+				count++;
+			}
+			while(count2 < row)
+			{
+				as.next();
+				int tester2 = as.getInt("apartment_id");
+				data[count2][0] = tester2;
+				count2++;
+			}
+			while(count3 < row)
+			{
+				ns.next();
+				String tester2 = ns.getString("name");
+				data[count3][1] = tester2;
+				count3++;
+			}
+			while(count4 < row)
+			{
+				zs.next();
+				String tester2 = zs.getString("zip_code");
+				data[count4][2] = tester2;
+				count4++;
+			}
+			while(count5 < row)
+			{
+				acs.next();
+				int tester2 = acs.getInt("accommodates");
+				data[count5][3] = tester2;
+				count5++;
+			}
+			while(count6 < row)
+			{
+				bs.next();
+				String tester2 = bs.getString("bedrooms");
+				data[count6][5] = tester2;
+				count6++;
+			}
+			while(count7 < row)
+			{
+				bas.next();
+				String tester2 = bas.getString("bathrooms");
+				data[count7][4] = tester2;
+				count7++;
+			}
+		}
+		catch(SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+
+		table.setModel(new DefaultTableModel(data,
+				new String[] {
+						"Apt ID", "Name", "Zip Code", "Accommodates", "Bathrooms", "Bedrooms", "Price"
+		}
+				) {
+			Class[] columnTypes = new Class[] {
+					String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(41);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(55);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(61);
+		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(5).setPreferredWidth(57);
+		table.getColumnModel().getColumn(6).setResizable(false);
+		table.getColumnModel().getColumn(6).setPreferredWidth(43);
+		scrollPane.setViewportView(table);
 		MainPanel.setVisible(false);
 
 		//SignInPanel elements
@@ -340,23 +463,23 @@ public class MainFrame {
 			}
 		});
 		searchField_1 = new JTextField();
-		searchField_1.setBounds(146, 11, 370, 30);
+		searchField_1.setBounds(146, 91, 370, 30);
 		SearchPanel.add(searchField_1);
 		searchField_1.setColumns(10);
 
 		searchField_2 = new JTextField();
 		searchField_2.setColumns(10);
-		searchField_2.setBounds(146, 52, 370, 30);
+		searchField_2.setBounds(146, 132, 370, 30);
 		SearchPanel.add(searchField_2);
 
 		searchField_3 = new JTextField();
 		searchField_3.setColumns(10);
-		searchField_3.setBounds(146, 93, 370, 30);
+		searchField_3.setBounds(146, 173, 370, 30);
 		SearchPanel.add(searchField_3);
 
 		searchField_4 = new JTextField();
 		searchField_4.setColumns(10);
-		searchField_4.setBounds(146, 134, 370, 30);
+		searchField_4.setBounds(146, 214, 370, 30);
 		SearchPanel.add(searchField_4);
 
 		JButton searchButton = new JButton("Search");
@@ -366,22 +489,22 @@ public class MainFrame {
 
 		JLabel location = new JLabel("Location\r\n");
 		location.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		location.setBounds(79, 11, 127, 22);
+		location.setBounds(79, 99, 57, 22);
 		SearchPanel.add(location);
 
 		JLabel startDate = new JLabel("Start Date\r\n");
 		startDate.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		startDate.setBounds(69, 52, 127, 22);
+		startDate.setBounds(69, 135, 67, 22);
 		SearchPanel.add(startDate);
 
 		JLabel endDate = new JLabel("End Date\r\n");
 		endDate.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		endDate.setBounds(74, 93, 127, 22);
+		endDate.setBounds(74, 176, 62, 22);
 		SearchPanel.add(endDate);
 
 		JLabel guest = new JLabel("Number of Guests\r\n");
 		guest.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		guest.setBounds(24, 134, 127, 22);
+		guest.setBounds(19, 217, 117, 22);
 		SearchPanel.add(guest);
 
 
@@ -397,36 +520,38 @@ public class MainFrame {
 		final JLabel searchLabel_0 = new JLabel("*");
 		searchLabel_0.setForeground(Color.RED);
 		searchLabel_0.setFont(new Font("Tahoma", Font.BOLD, 16));
-		searchLabel_0.setBounds(528, 19, 46, 14);
+		searchLabel_0.setBounds(526, 97, 46, 14);
 		SearchPanel.add(searchLabel_0);
 		searchLabel_0.setVisible(false);
 
 		JLabel searchLabel_1 = new JLabel("*");
 		searchLabel_1.setForeground(Color.RED);
 		searchLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		searchLabel_1.setBounds(528, 60, 46, 14);
+		searchLabel_1.setBounds(526, 138, 46, 14);
 		SearchPanel.add(searchLabel_1);
 		searchLabel_1.setVisible(false);
 
 		JLabel searchLabel_2 = new JLabel("*");
 		searchLabel_2.setForeground(Color.RED);
 		searchLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		searchLabel_2.setBounds(528, 101, 46, 14);
+		searchLabel_2.setBounds(526, 179, 46, 14);
 		SearchPanel.add(searchLabel_2);
 		searchLabel_2.setVisible(false);
 
 		JLabel searchLabel_3 = new JLabel("*");
 		searchLabel_3.setForeground(Color.RED);
 		searchLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
-		searchLabel_3.setBounds(528, 140, 46, 14);
+		searchLabel_3.setBounds(526, 220, 46, 14);
 		SearchPanel.add(searchLabel_3);
+
+		JLabel lblNewLabel_3 = new JLabel("Requests");
+		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		lblNewLabel_3.setBounds(302, 11, 117, 38);
+		SearchPanel.add(lblNewLabel_3);
 		searchLabel_3.setVisible(false);
 
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				char[] password = passwordField_1.getPassword();
-				String string_pass = new String(password);
 
 				String location = "'" + searchField_1.getText() + "', ";
 				String startDate = "'" + searchField_2.getText() + "', ";
@@ -493,12 +618,6 @@ public class MainFrame {
 				}
 			}
 		});
-		/* MAIN PANEL GOES HERE */
-		final JLabel test = new JLabel("WORK IN PROGRESS");
-		test.setForeground(Color.BLACK);
-		test.setFont(new Font("Tahoma", Font.BOLD, 16));
-		test.setBounds(250, 250, 100, 14);
-		MainPanel.add(test);
 
 		//SignUp Button - SignIn Panel
 		button.addActionListener(new ActionListener() {
