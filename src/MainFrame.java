@@ -73,6 +73,8 @@ public class MainFrame {
 	
 	private String u_username;
 	private String u_pass;
+	private String u_bathrooms;
+	private String u_bedrooms;
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -82,6 +84,20 @@ public class MainFrame {
 	private JTextField maxPriceTextField;
 	private JTextField textField_2;
 	private JTextField textField_4;
+	
+	private JPanel MainPanel;
+	private JPanel SignInPanel;
+	private JPanel SignUpPanel;
+	private JPanel ReservationPanel;
+	private JPanel AccountPanel;
+	
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_4;
+	private JLabel label_7;
+	private JLabel label_8;
+	private JLabel label_9;
+	private JLabel label_10;
+	private JLabel label_11;
 
 	private static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
@@ -115,6 +131,11 @@ public class MainFrame {
 	 */
 	public MainFrame() {
 		initialize();
+		SignInPanel();
+		SignUpPanel();
+		MainPanel();
+		AccountPanel();
+		ReservationPanel();
 	}
 
 	/**
@@ -128,32 +149,14 @@ public class MainFrame {
 		frmApartmentManagementSystem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmApartmentManagementSystem.getContentPane().setLayout(new CardLayout(0, 0));
 
-
-		final JPanel SignInPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(SignInPanel, "name_1059160628680983");
-		SignInPanel.setLayout(null);
-		SignInPanel.setVisible(true);
-
-		final JPanel SignUpPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(SignUpPanel, "name_1059917700298584");
-		SignUpPanel.setLayout(null);
-		SignUpPanel.setVisible(false);
-
-		final JPanel ReservationPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(ReservationPanel, "name_1059165859655842");
-		ReservationPanel.setLayout(null);
-		ReservationPanel.setVisible(false);
-
-		final JPanel MainPanel = new JPanel();
+		// Main Panel
+	}
+	public void MainPanel()
+	{
+		MainPanel = new JPanel();
 		frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
 		MainPanel.setLayout(null);
 		
-		final JPanel AccountPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
-		AccountPanel.setLayout(null);
-
-		
-		// Main Panel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 513, 360);
 		MainPanel.add(scrollPane);
@@ -203,10 +206,10 @@ public class MainFrame {
 		      "Apt ID", "Description", "Zip Code", "# PPL", "Bath", "Bed", "Price"
 		   }
 		) {
-		   Class[] columnTypes = new Class[] {
+		   Class<?>[] columnTypes = new Class[] {
 		      Integer.class, String.class, String.class, Integer.class, String.class, String.class, String.class
 		   };
-		   public Class getColumnClass(int columnIndex) {
+		   public Class<?> getColumnClass(int columnIndex) {
 		      return columnTypes[columnIndex];
 		   }
 		   boolean[] columnEditables = new boolean[] {
@@ -280,10 +283,10 @@ public class MainFrame {
 		accountButton.setBounds(533, 295, 191, 58);
 		MainPanel.add(accountButton);
 		
-		JButton backToSearchButton = new JButton("Filter");
-		backToSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		backToSearchButton.setBounds(533, 249, 191, 35);
-		MainPanel.add(backToSearchButton);
+		JButton filterButton = new JButton("Filter");
+		filterButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		filterButton.setBounds(533, 249, 191, 35);
+		MainPanel.add(filterButton);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -303,9 +306,73 @@ public class MainFrame {
 		lblFilterResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
 		lblFilterResults.setBounds(554, 18, 157, 26);
 		MainPanel.add(lblFilterResults);
+		
+		/*	DOES NOT WORK
+		 * filterButton.addActionListener(new ActionListener() {
+	         public void actionPerformed(ActionEvent arg0) {
+	        	 try
+	        	 {
+	        		 int count2 = 0;
+		     		PreparedStatement dataStatement = conn.prepareStatement("SELECT * FROM apartments WHERE bathrooms = ?");
+		               
+		               u_bathrooms = String.valueOf(bathroomsTextField.getText());
+		               
+		               dataStatement.setString(1, u_bathrooms);
+		               
+		               ResultSet result = dataStatement.executeQuery();
+		               while(count2 < row)
+		               {
+		            	   result.next();
+		            	   String temp = result.getString("bathrooms");
+		            	   data[count2][4] = temp;
+		            	   count2++;
+		               }
+	        	 }
+	        	 catch(SQLException sx)
+	        	 {
+	        		 sx.printStackTrace();
+	        	 }
+	         }
+	      });*/
+	      
+		//Account Info - Main Panel
+				accountButton.addActionListener(new ActionListener() {
+		         public void actionPerformed(ActionEvent e) {
+		            PreparedStatement ps;
+		            try{
+		            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
+		            ps.setString(1, u_username);
+		            ps.setString(2, u_pass);
+		            
+		            ResultSet result = ps.executeQuery();
+		            result.next();
+		            
+		            lblNewLabel_4.setText("Name: " + result.getString("name"));
+		            label_7.setText("E-mail: " + result.getString("email"));
+		            label_8.setText("Address: " + result.getString("address"));
+		            label_9.setText("City: " + result.getString("city"));
+		            label_10.setText("State: " + result.getString("state"));
+		            label_11.setText("Zip Code: " + result.getString("zip_code"));
+		            
+		            } catch (SQLException ex) {
+		               ex.printStackTrace();
+		            }
+		            
+		            MainPanel.setVisible(false);
+		            AccountPanel.setVisible(true);
+		            
+		         }
+		      });
+	}
 
 		//SignInPanel elements
-
+	public void SignInPanel()
+	{
+		SignInPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(SignInPanel, "name_1059160628680983");
+		SignInPanel.setLayout(null);
+		SignInPanel.setVisible(true);
+		
 		Button button = new Button("Sign Up");
 		button.setFont(new Font("Arial", Font.BOLD, 16));
 		button.setBounds(148, 205, 177, 52);
@@ -338,7 +405,7 @@ public class MainFrame {
 		lblPassword.setBounds(80, 139, 88, 20);
 		SignInPanel.add(lblPassword);
 
-		final JLabel lblNewLabel_1 = new JLabel("User added successfully!");
+		lblNewLabel_1 = new JLabel("User added successfully!");
 		lblNewLabel_1.setForeground(Color.GREEN);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(105, 297, 220, 30);
@@ -357,8 +424,51 @@ public class MainFrame {
 		lblNewLabel_5.setBounds(161, 22, 389, 30);
 		SignInPanel.add(lblNewLabel_5);
 		lblNewLabel_2.setVisible(false);
+		
+		//SignUp Button - SignIn Panel
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						SignInPanel.setVisible(false);
+						SignUpPanel.setVisible(true);
+					}
+				});
+				
+				//SignIn Button - SignIn Panel
+			      button_1.addActionListener(new ActionListener() {
+			         public void actionPerformed(ActionEvent e) {
+			            PreparedStatement ps;
+			            try {
+			               ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
+			               
+			               u_username = String.valueOf(textField.getText());
+			               u_pass = String.valueOf(passwordField.getPassword());
+			               
+			               ps.setString(1, u_username);
+			               ps.setString(2, u_pass);
+			               
+			               ResultSet result = ps.executeQuery();
+			               if(result.next()){
+			                  JOptionPane.showMessageDialog(null, "Successfully logged in.");
+			                  MainPanel.setVisible(true);
+			                  SignInPanel.setVisible(false);
+			               }
+			               else{
+			                  JOptionPane.showMessageDialog(null, "Invalid email or password");
+			               }
+			            } catch (SQLException ex) {
+			               ex.printStackTrace();
+			            }
+			         }
+			      });
+	}
+	public void SignUpPanel()
+	{
 
 		//SignUpPanel elements
+		SignUpPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(SignUpPanel, "name_1059917700298584");
+		SignUpPanel.setLayout(null);
+		SignUpPanel.setVisible(false);
 
 		JButton btnNewButton = new JButton("Sign Up");
 		btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -491,7 +601,128 @@ public class MainFrame {
 		label_6.setBounds(634, 224, 46, 14);
 		SignUpPanel.add(label_6);
 		label_6.setVisible(false);
+		
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				char[] password = passwordField_1.getPassword();
+				String string_pass = new String(password);
+
+				String email = "'" + textField_1.getText() + "', ";
+				String pass = "'" + string_pass + "', ";
+				String name = "'" + textField_6.getText()+ "', ";
+				String address = "'" + textField_5.getText() + "', ";
+				String city = "'" + txtLocation.getText() + "', ";
+				String state = "'" + textField_3.getText() + "', ";
+				String zip = "'" + textField_7.getText() + "'";
+
+				if(!validate(textField_1.getText()))
+				{
+					label.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_1.setText("");
+				}
+				else
+				{
+					label.setVisible(false);
+				}
+
+				if(password.length == 0)
+				{
+					label_1.setVisible(true);
+					lblNewLabel.setVisible(true);
+					passwordField_1.setText("");
+				}
+				else
+				{
+					label_1.setVisible(false);
+				}
+
+				if(textField_6.getText().length() == 0)
+				{
+					label_2.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_6.setText("");
+				}
+				else
+				{
+					label_2.setVisible(false);
+				}
+
+				if(textField_5.getText().length() == 0)
+				{
+					label_3.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_5.setText("");
+				}
+				else
+				{
+					label_3.setVisible(false);
+				}
+
+				if(txtLocation.getText().length() == 0)
+				{
+					label_4.setVisible(true);
+					lblNewLabel.setVisible(true);
+					txtLocation.setText("");
+				}
+				else
+				{
+					label_4.setVisible(false);
+				}
+
+				if(textField_3.getText().length() == 0)
+				{
+					label_5.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_3.setText("");
+				}
+				else
+				{
+					label_5.setVisible(false);
+				}
+
+				if(textField_7.getText().length() != 5)
+				{
+					label_6.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_7.setText("");
+				}
+				else
+				{
+					label_6.setVisible(false);
+				}
+
+				if(!label.isVisible() && !label_1.isVisible() && !label_2.isVisible()
+						&& !label_3.isVisible() && !label_4.isVisible()
+						&& !label_5.isVisible() && !label_6.isVisible())
+				{
+					try{
+						Statement stmt = conn.createStatement();
+						String sql = "INSERT INTO customers "
+								+ "VALUES ('0', " + email + pass + name 
+								+ address + city + state + zip + ");";
+						stmt.executeUpdate(sql);
+					}
+					catch (Exception ex){
+						ex.printStackTrace();
+					}
+
+					SignUpPanel.setVisible(false);
+					SignInPanel.setVisible(true);
+					lblNewLabel_1.setVisible(true);
+				}
+			}
+		});
+	}
+	public void ReservationPanel()
+	{
+		ReservationPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(ReservationPanel, "name_1059165859655842");
+		ReservationPanel.setLayout(null);
+		ReservationPanel.setVisible(false);
+		
 		searchField_1 = new JTextField();
 		searchField_1.setBounds(146, 91, 370, 30);
 		ReservationPanel.add(searchField_1);
@@ -648,6 +879,12 @@ public class MainFrame {
 				}
 			}
 		});
+	}
+	public void AccountPanel()
+	{
+		AccountPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
+		AccountPanel.setLayout(null);
 		
 		//Account Panel
 		JLabel lblNewLabel_31 = new JLabel("Your Account Information");
@@ -667,103 +904,45 @@ public class MainFrame {
 		list.setBounds(232, 68, 469, 287);
 		AccountPanel.add(list);
 		
-		final JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(22, 92, 200, 29);
 		AccountPanel.add(lblNewLabel_4);
 		
-		final JLabel label_7 = new JLabel("");
+		label_7 = new JLabel("");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_7.setBounds(22, 132, 200, 29);
 		AccountPanel.add(label_7);
 		
-		final JLabel label_8 = new JLabel("");
+		label_8 = new JLabel("");
 		label_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_8.setBounds(22, 172, 200, 29);
 		AccountPanel.add(label_8);
 		
-		final JLabel label_9 = new JLabel("");
+		label_9 = new JLabel("");
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_9.setBounds(22, 212, 200, 29);
 		AccountPanel.add(label_9);
 		
-		final JLabel label_10 = new JLabel("");
+		label_10 = new JLabel("");
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_10.setBounds(22, 253, 200, 29);
 		AccountPanel.add(label_10);
 		
-		final JLabel label_11 = new JLabel("");
+		label_11 = new JLabel("");
 		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
-		
-		
-		//SignIn Button - SignIn Panel
-      button_1.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            PreparedStatement ps;
-            try {
-               ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
-               
-               u_username = String.valueOf(textField.getText());
-               u_pass = String.valueOf(passwordField.getPassword());
-               
-               ps.setString(1, u_username);
-               ps.setString(2, u_pass);
-               
-               ResultSet result = ps.executeQuery();
-               if(result.next()){
-                  JOptionPane.showMessageDialog(null, "Successfully logged in.");
-                  MainPanel.setVisible(true);
-                  SignInPanel.setVisible(false);
-               }
-               else{
-                  JOptionPane.showMessageDialog(null, "Invalid email or password");
-               }
-            } catch (SQLException ex) {
-               ex.printStackTrace();
-            }
-         }
-      });
-      
-		//Account Info - Main Panel
-		accountButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            PreparedStatement ps;
-            try{
-            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
-            ps.setString(1, u_username);
-            ps.setString(2, u_pass);
-            
-            ResultSet result = ps.executeQuery();
-            result.next();
-            
-            lblNewLabel_4.setText("Name: " + result.getString("name"));
-            label_7.setText("E-mail: " + result.getString("email"));
-            label_8.setText("Address: " + result.getString("address"));
-            label_9.setText("City: " + result.getString("city"));
-            label_10.setText("State: " + result.getString("state"));
-            label_11.setText("Zip Code: " + result.getString("zip_code"));
-            
-            } catch (SQLException ex) {
-               ex.printStackTrace();
-            }
-            
-            MainPanel.setVisible(false);
-            AccountPanel.setVisible(true);
-            
-         }
-      });
-      
+		   
 		//Back Button - Main Panel
-      backToSearchButton.addActionListener(new ActionListener() {
+      /*backToSearchButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            /*
+            
             MainPanel.setVisible(false);
             SearchPanel.setVisible(true);
-            */
+            
          }
-      });
+      });*/
 		
 		//Back Button - Account Panel
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -773,126 +952,8 @@ public class MainFrame {
          }
       });
 
-		//SignUp Button - SignIn Panel
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SignInPanel.setVisible(false);
-				SignUpPanel.setVisible(true);
-			}
-		});
 
 		//SignUp Button - SignUpPanel
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				char[] password = passwordField_1.getPassword();
-				String string_pass = new String(password);
-
-				String email = "'" + textField_1.getText() + "', ";
-				String pass = "'" + string_pass + "', ";
-				String name = "'" + textField_6.getText()+ "', ";
-				String address = "'" + textField_5.getText() + "', ";
-				String city = "'" + txtLocation.getText() + "', ";
-				String state = "'" + textField_3.getText() + "', ";
-				String zip = "'" + textField_7.getText() + "'";
-
-				if(!validate(textField_1.getText()))
-				{
-					label.setVisible(true);
-					lblNewLabel.setVisible(true);
-					textField_1.setText("");
-				}
-				else
-				{
-					label.setVisible(false);
-				}
-
-				if(password.length == 0)
-				{
-					label_1.setVisible(true);
-					lblNewLabel.setVisible(true);
-					passwordField_1.setText("");
-				}
-				else
-				{
-					label_1.setVisible(false);
-				}
-
-				if(textField_6.getText().length() == 0)
-				{
-					label_2.setVisible(true);
-					lblNewLabel.setVisible(true);
-					textField_6.setText("");
-				}
-				else
-				{
-					label_2.setVisible(false);
-				}
-
-				if(textField_5.getText().length() == 0)
-				{
-					label_3.setVisible(true);
-					lblNewLabel.setVisible(true);
-					textField_5.setText("");
-				}
-				else
-				{
-					label_3.setVisible(false);
-				}
-
-				if(txtLocation.getText().length() == 0)
-				{
-					label_4.setVisible(true);
-					lblNewLabel.setVisible(true);
-					txtLocation.setText("");
-				}
-				else
-				{
-					label_4.setVisible(false);
-				}
-
-				if(textField_3.getText().length() == 0)
-				{
-					label_5.setVisible(true);
-					lblNewLabel.setVisible(true);
-					textField_3.setText("");
-				}
-				else
-				{
-					label_5.setVisible(false);
-				}
-
-				if(textField_7.getText().length() != 5)
-				{
-					label_6.setVisible(true);
-					lblNewLabel.setVisible(true);
-					textField_7.setText("");
-				}
-				else
-				{
-					label_6.setVisible(false);
-				}
-
-				if(!label.isVisible() && !label_1.isVisible() && !label_2.isVisible()
-						&& !label_3.isVisible() && !label_4.isVisible()
-						&& !label_5.isVisible() && !label_6.isVisible())
-				{
-					try{
-						Statement stmt = conn.createStatement();
-						String sql = "INSERT INTO customers "
-								+ "VALUES ('0', " + email + pass + name 
-								+ address + city + state + zip + ");";
-						stmt.executeUpdate(sql);
-					}
-					catch (Exception ex){
-						ex.printStackTrace();
-					}
-
-					SignUpPanel.setVisible(false);
-					SignInPanel.setVisible(true);
-					lblNewLabel_1.setVisible(true);
-				}
-			}
-		});
+		
 	}
 }
