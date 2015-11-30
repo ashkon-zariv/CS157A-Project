@@ -36,14 +36,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 import java.sql.*;
-<<<<<<< HEAD
 import javax.swing.JList;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-=======
 import javax.swing.table.DefaultTableModel;
->>>>>>> eed7e0080ebfc6d7e328e15314ae47aec0c3774e
 
 
 public class MainFrame {
@@ -631,7 +628,6 @@ public class MainFrame {
 				}
 			}
 		});
-<<<<<<< HEAD
 		/* MAIN PANEL GOES HERE */
 		final JLabel test = new JLabel("WORK IN PROGRESS");
 		test.setForeground(Color.BLACK);
@@ -644,10 +640,10 @@ public class MainFrame {
 		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
 		AccountPanel.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("Your Account Information");
-		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 24));
-		lblNewLabel_3.setBounds(202, 11, 374, 35);
-		AccountPanel.add(lblNewLabel_3);
+		JLabel lblNewLabel_31 = new JLabel("Your Account Information");
+		lblNewLabel_31.setFont(new Font("Arial Black", Font.PLAIN, 24));
+		lblNewLabel_31.setBounds(202, 11, 374, 35);
+		AccountPanel.add(lblNewLabel_31);
 		
 		JButton btnNewButton_1 = new JButton("Back to Search");
 		btnNewButton_1.setBounds(22, 17, 109, 35);
@@ -692,8 +688,6 @@ public class MainFrame {
             SearchPanel.setVisible(true);
          }
       });
-=======
->>>>>>> eed7e0080ebfc6d7e328e15314ae47aec0c3774e
 
 		//SignUp Button - SignIn Panel
 		button.addActionListener(new ActionListener() {
