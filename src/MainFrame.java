@@ -74,6 +74,11 @@ public class MainFrame {
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	private JTable table;
+	private JTextField zipTextField;
+	private JTextField bedroomsTextField;
+	private JTextField bathroomsTextField;
+	private JTextField minPriceTextField;
+	private JTextField maxPriceTextField;
 
 	private static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
@@ -136,10 +141,16 @@ public class MainFrame {
 		SearchPanel.setLayout(null);
 		SearchPanel.setVisible(false);
 
-		JPanel MainPanel = new JPanel();
+		final JPanel MainPanel = new JPanel();
 		frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
 		MainPanel.setLayout(null);
+		
+		final JPanel AccountPanel = new JPanel();
+		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
+		AccountPanel.setLayout(null);
 
+		
+		// Main Panel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 11, 452, 310);
 		MainPanel.add(scrollPane);
@@ -228,25 +239,19 @@ public class MainFrame {
 			ex.printStackTrace();
 		}
 
-		table.setModel(new DefaultTableModel(data,
-				new String[] {
-						"Apt ID", "Name", "Zip Code", "Accommodates", "Bathrooms", "Bedrooms", "Price"
-		}
-				) {
+		table.setModel(new DefaultTableModel(
+			data,
+			new String[] {
+				"Apt ID", "Name", "Zip Code", "Accommodates", "Bathrooms", "Bedrooms", "Price"
+			}
+		) {
 			Class[] columnTypes = new Class[] {
-					String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+				String.class, String.class, Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
 		});
-
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(41);
 		table.getColumnModel().getColumn(1).setResizable(false);
@@ -258,9 +263,82 @@ public class MainFrame {
 		table.getColumnModel().getColumn(5).setResizable(false);
 		table.getColumnModel().getColumn(5).setPreferredWidth(57);
 		table.getColumnModel().getColumn(6).setResizable(false);
-		table.getColumnModel().getColumn(6).setPreferredWidth(43);
+		table.getColumnModel().getColumn(6).setPreferredWidth(51);
 		scrollPane.setViewportView(table);
-		MainPanel.setVisible(false);
+		
+		JLabel zipLabel = new JLabel("Search by Zip Code");
+		zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		zipLabel.setBounds(462, 18, 122, 26);
+		MainPanel.add(zipLabel);
+		
+		zipTextField = new JTextField();
+		zipTextField.setBounds(589, 22, 62, 20);
+		MainPanel.add(zipTextField);
+		zipTextField.setColumns(10);
+		
+		JLabel bedroomsLabel = new JLabel("# of Bedrooms");
+		bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		bedroomsLabel.setBounds(462, 51, 122, 26);
+		MainPanel.add(bedroomsLabel);
+		
+		JLabel bathroomsLabel = new JLabel("# of Bathrooms");
+		bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		bathroomsLabel.setBounds(462, 88, 122, 26);
+		MainPanel.add(bathroomsLabel);
+		
+		JLabel minPriceLabel = new JLabel("Min. Price   $");
+		minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		minPriceLabel.setBounds(462, 125, 122, 26);
+		MainPanel.add(minPriceLabel);
+		
+		JLabel maxPriceLabel = new JLabel("Max Price   $");
+		maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		maxPriceLabel.setBounds(462, 162, 122, 26);
+		MainPanel.add(maxPriceLabel);
+		
+		bedroomsTextField = new JTextField();
+		bedroomsTextField.setColumns(10);
+		bedroomsTextField.setBounds(560, 55, 37, 20);
+		MainPanel.add(bedroomsTextField);
+		
+		bathroomsTextField = new JTextField();
+		bathroomsTextField.setColumns(10);
+		bathroomsTextField.setBounds(560, 92, 37, 20);
+		MainPanel.add(bathroomsTextField);
+		
+		minPriceTextField = new JTextField();
+		minPriceTextField.setColumns(10);
+		minPriceTextField.setBounds(546, 129, 86, 20);
+		MainPanel.add(minPriceTextField);
+		
+		maxPriceTextField = new JTextField();
+		maxPriceTextField.setColumns(10);
+		maxPriceTextField.setBounds(546, 166, 86, 20);
+		MainPanel.add(maxPriceTextField);
+		
+		JButton accountButton = new JButton("Account Status");
+		accountButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		accountButton.setBounds(462, 263, 125, 58);
+		MainPanel.add(accountButton);
+		
+		JButton backToSearchButton = new JButton("Back to Search");
+		backToSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		backToSearchButton.setBounds(600, 263, 123, 58);
+		MainPanel.add(backToSearchButton);
+		
+		accountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.setVisible(false);
+				AccountPanel.setVisible(true);
+			}
+		});
+		
+		backToSearchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.setVisible(false);
+				SearchPanel.setVisible(true);
+			}
+		});
 
 		//SignInPanel elements
 
@@ -628,17 +706,9 @@ public class MainFrame {
 				}
 			}
 		});
-		/* MAIN PANEL GOES HERE */
-		final JLabel test = new JLabel("WORK IN PROGRESS");
-		test.setForeground(Color.BLACK);
-		test.setFont(new Font("Tahoma", Font.BOLD, 16));
-		test.setBounds(250, 250, 100, 14);
-		MainPanel.add(test);
 		
 		//Account Panel
-		JPanel AccountPanel = new JPanel();
-		frmApartmentManagementSystem.getContentPane().add(AccountPanel, "name_77351655327903");
-		AccountPanel.setLayout(null);
+
 		
 		JLabel lblNewLabel_31 = new JLabel("Your Account Information");
 		lblNewLabel_31.setFont(new Font("Arial Black", Font.PLAIN, 24));
