@@ -43,6 +43,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 
+
 public class MainFrame {
 
 	// JDBC driver name and database URL
@@ -78,7 +79,7 @@ public class MainFrame {
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-	private JTable table;
+	private JTable table = new JTable();
 	private JTextField bathroomsTextField;
 	private JTextField minPriceTextField;
 	private JTextField maxPriceTextField;
@@ -98,6 +99,12 @@ public class MainFrame {
 	private JLabel label_9;
 	private JLabel label_10;
 	private JLabel label_11;
+	
+	private JScrollPane scrollPane = new JScrollPane();
+	int row = 100;
+	int col = 7;
+	Object[][] data = new Object[row][col];
+
 
 	private static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
@@ -157,14 +164,8 @@ public class MainFrame {
 		frmApartmentManagementSystem.getContentPane().add(MainPanel, "name_1072333189294654");
 		MainPanel.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 513, 360);
 		MainPanel.add(scrollPane);
-
-		table = new JTable();
-		int row = 100;
-		int col = 7;
-		Object[][] data = new Object[row][col];
 		
 		try
 		{
@@ -199,7 +200,10 @@ public class MainFrame {
 		{
 			ex.printStackTrace();
 		}
-
+		createTable();
+	}
+	public void createTable()
+	{
 		table.setModel(new DefaultTableModel(
 		   data,
 		   new String[] {
@@ -307,8 +311,7 @@ public class MainFrame {
 		lblFilterResults.setBounds(554, 18, 157, 26);
 		MainPanel.add(lblFilterResults);
 		
-		/*	DOES NOT WORK
-		 * filterButton.addActionListener(new ActionListener() {
+		  filterButton.addActionListener(new ActionListener() {
 	         public void actionPerformed(ActionEvent arg0) {
 	        	 try
 	        	 {
@@ -323,17 +326,32 @@ public class MainFrame {
 		               while(count2 < row)
 		               {
 		            	   result.next();
-		            	   String temp = result.getString("bathrooms");
-		            	   data[count2][4] = temp;
+		   				String temp = result.getString("price");
+						int temp2 = result.getInt("apartment_id");
+						String temp3 = result.getString("name");
+						String temp4 = result.getString("zip_code");
+						int temp5 = result.getInt("accommodates");
+						String temp7 = result.getString("bedrooms");
+						String temp6 = result.getString("bathrooms");
+						
+						data[count2][6] = temp;
+						data[count2][0] = temp2;
+						data[count2][1] = temp3;
+						data[count2][2] = temp4;
+						data[count2][3] = temp5;
+						data[count2][4] = temp6;
+						data[count2][5] = temp7;
 		            	   count2++;
 		               }
+		               
 	        	 }
 	        	 catch(SQLException sx)
 	        	 {
 	        		 sx.printStackTrace();
 	        	 }
+	        	 createTable();
 	         }
-	      });*/
+	      });
 	      
 		//Account Info - Main Panel
 				accountButton.addActionListener(new ActionListener() {
