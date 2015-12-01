@@ -893,7 +893,7 @@ public class MainFrame {
 		AccountPanel.add(lblNewLabel_31);
 		
 		JButton btnNewButton_1 = new JButton("Back to Search");
-		btnNewButton_1.setBounds(22, 17, 109, 35);
+		btnNewButton_1.setBounds(22, 17, 139, 35);
 		AccountPanel.add(btnNewButton_1);
 		
 		JList list = new JList();
@@ -951,9 +951,6 @@ public class MainFrame {
             MainPanel.setVisible(true);
          }
       });
-
-
-		//SignUp Button - SignUpPanel
 		
 	}
 }
