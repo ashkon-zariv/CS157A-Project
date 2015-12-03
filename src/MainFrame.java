@@ -160,8 +160,8 @@ public class MainFrame {
 		frmApartmentManagementSystem.setBounds(100, 100, 750, 420);
 		frmApartmentManagementSystem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmApartmentManagementSystem.getContentPane().setLayout(new CardLayout(0, 0));
-
-		// Main Panel
+		
+		
 	}
 	public void MainPanel()
 	{
@@ -171,6 +171,68 @@ public class MainFrame {
 		
 		scrollPane.setBounds(10, 11, 513, 360);
 		MainPanel.add(scrollPane);
+		
+	   JLabel zipLabel = new JLabel("Zip Code");
+      zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      zipLabel.setBounds(554, 52, 86, 26);
+      MainPanel.add(zipLabel);
+      
+      JLabel bedroomsLabel = new JLabel("# of Bedrooms");
+      bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      bedroomsLabel.setBounds(554, 89, 122, 26);
+      MainPanel.add(bedroomsLabel);
+      
+      JLabel bathroomsLabel = new JLabel("# of Bathrooms");
+      bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      bathroomsLabel.setBounds(555, 126, 122, 26);
+      MainPanel.add(bathroomsLabel);
+      
+      JLabel minPriceLabel = new JLabel("Min. Price   $");
+      minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      minPriceLabel.setBounds(533, 163, 122, 26);
+      MainPanel.add(minPriceLabel);
+      
+      JLabel maxPriceLabel = new JLabel("Max Price   $");
+      maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+      maxPriceLabel.setBounds(533, 200, 122, 26);
+      MainPanel.add(maxPriceLabel);
+      
+      bathroomsTextField = new JTextField();
+      bathroomsTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      bathroomsTextField.setColumns(10);
+      bathroomsTextField.setBounds(675, 126, 49, 26);
+      MainPanel.add(bathroomsTextField);
+      
+      minPriceTextField = new JTextField();
+      minPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      minPriceTextField.setColumns(10);
+      minPriceTextField.setBounds(638, 165, 86, 26);
+      MainPanel.add(minPriceTextField);
+      
+      maxPriceTextField = new JTextField();
+      maxPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      maxPriceTextField.setColumns(10);
+      maxPriceTextField.setBounds(638, 203, 86, 24);
+      MainPanel.add(maxPriceTextField);
+      
+      textField_2 = new JTextField();
+      textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      textField_2.setColumns(10);
+      textField_2.setBounds(675, 91, 49, 26);
+      MainPanel.add(textField_2);
+      
+      textField_4 = new JTextField();
+      textField_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      textField_4.setColumns(10);
+      textField_4.setBounds(638, 52, 86, 26);
+      MainPanel.add(textField_4);
+      
+      JLabel lblFilterResults = new JLabel("Filter Results");
+      lblFilterResults.setForeground(Color.GRAY);
+      lblFilterResults.setHorizontalAlignment(SwingConstants.CENTER);
+      lblFilterResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
+      lblFilterResults.setBounds(554, 18, 157, 26);
+      MainPanel.add(lblFilterResults);
 		
 		try
 		{
@@ -245,119 +307,124 @@ public class MainFrame {
 		
 		scrollPane.setViewportView(table);
 		
-		JLabel zipLabel = new JLabel("Zip Code");
-		zipLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		zipLabel.setBounds(554, 52, 86, 26);
-		MainPanel.add(zipLabel);
-		
-		JLabel bedroomsLabel = new JLabel("# of Bedrooms");
-		bedroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		bedroomsLabel.setBounds(554, 89, 122, 26);
-		MainPanel.add(bedroomsLabel);
-		
-		JLabel bathroomsLabel = new JLabel("# of Bathrooms");
-		bathroomsLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		bathroomsLabel.setBounds(555, 126, 122, 26);
-		MainPanel.add(bathroomsLabel);
-		
-		JLabel minPriceLabel = new JLabel("Min. Price   $");
-		minPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		minPriceLabel.setBounds(533, 163, 122, 26);
-		MainPanel.add(minPriceLabel);
-		
-		JLabel maxPriceLabel = new JLabel("Max Price   $");
-		maxPriceLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		maxPriceLabel.setBounds(533, 200, 122, 26);
-		MainPanel.add(maxPriceLabel);
-		
-		bathroomsTextField = new JTextField();
-		bathroomsTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		bathroomsTextField.setColumns(10);
-		bathroomsTextField.setBounds(675, 126, 49, 26);
-		MainPanel.add(bathroomsTextField);
-		
-		minPriceTextField = new JTextField();
-		minPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		minPriceTextField.setColumns(10);
-		minPriceTextField.setBounds(638, 165, 86, 26);
-		MainPanel.add(minPriceTextField);
-		
-		maxPriceTextField = new JTextField();
-		maxPriceTextField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		maxPriceTextField.setColumns(10);
-		maxPriceTextField.setBounds(638, 203, 86, 24);
-		MainPanel.add(maxPriceTextField);
-		
-		JButton accountButton = new JButton("Account Status");
-		accountButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		accountButton.setBounds(533, 295, 191, 58);
-		MainPanel.add(accountButton);
-		
 		JButton filterButton = new JButton("Filter");
-		filterButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		filterButton.setBounds(533, 249, 191, 35);
-		MainPanel.add(filterButton);
+      filterButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      filterButton.setBounds(533, 249, 191, 35);
+      MainPanel.add(filterButton);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_2.setColumns(10);
-		textField_2.setBounds(675, 91, 49, 26);
-		MainPanel.add(textField_2);
-		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_4.setColumns(10);
-		textField_4.setBounds(638, 52, 86, 26);
-		MainPanel.add(textField_4);
-		
-		JLabel lblFilterResults = new JLabel("Filter Results");
-		lblFilterResults.setForeground(Color.GRAY);
-		lblFilterResults.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFilterResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
-		lblFilterResults.setBounds(554, 18, 157, 26);
-		MainPanel.add(lblFilterResults);
-		
-	  filterButton.addActionListener(new ActionListener() {
+	   filterButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent arg0) {
         	 try
         	 {
         		int count2 = 0;
-	     		PreparedStatement dataStatement = conn.prepareStatement("SELECT * FROM apartments WHERE bathrooms = ?");
-	               
-            u_bathrooms = String.valueOf(bathroomsTextField.getText());
-            
-            dataStatement.setString(1, u_bathrooms);
-	               
-            ResultSet result = dataStatement.executeQuery();
-            while(count2 < row)
+        		StringBuffer sb = new StringBuffer("SELECT * FROM apartments WHERE");
+        		
+        		boolean query_b = false;
+        		String zip_q = String.valueOf(textField_4.getText());
+        		String minP_q = String.valueOf(minPriceTextField.getText());
+        		String maxP_q = String.valueOf(minPriceTextField.getText());
+        		String bed_q = String.valueOf(bathroomsTextField.getText());
+        		String bath_q = String.valueOf(bathroomsTextField.getText());
+        		
+        		if(zip_q.length() == 5)
+        		{
+        		   if(!query_b){
+        		      sb.append(" zip_code = " + zip_q);
+        		      query_b = true;
+        		   }
+        		   else{
+        		    sb.append(" AND zip_code = " + zip_q);
+        		   }
+        		}
+        		
+        		if(!minP_q.equals(""))
+        		{
+        		   if(!query_b){
+        		      sb.append(" price >= " + minP_q);
+        		      query_b = true;
+        		   }
+        		   else{
+        		      sb.append(" AND price >= " + minP_q);
+        		   }
+        		}
+        		
+        		if(!maxP_q.equals(""))
             {
-	            result.next();
-	   		   String temp = result.getString("price");
-					int temp2 = result.getInt("apartment_id");
-					String temp3 = result.getString("name");
-					String temp4 = result.getString("zip_code");
-					int temp5 = result.getInt("accommodates");
-					String temp7 = result.getString("bedrooms");
-					String temp6 = result.getString("bathrooms");
-					
-					table.getModel().setValueAt(temp, count2, 6);
-					table.getModel().setValueAt(temp2, count2, 0);
-					table.getModel().setValueAt(temp3, count2, 1);
-					table.getModel().setValueAt(temp4, count2, 2);
-					table.getModel().setValueAt(temp5, count2, 3);
-					table.getModel().setValueAt(temp6, count2, 4);
-					table.getModel().setValueAt(temp7, count2, 5);
-            	count2++;
-            }     
-            result = null;
+               if(!query_b){
+                  sb.append(" price <= " + maxP_q);
+                  query_b = true;
+               }
+               else{
+                  sb.append(" AND price <= " + maxP_q);
+               }
+            }
+        		
+        		if(!bed_q.equals(""))
+            {
+               if(!query_b){
+                  sb.append(" bedrooms = " + bed_q);
+                  query_b = true;
+               }
+               else{
+                  sb.append(" AND bedrooms = " + bed_q);
+               }
+            }
+        		
+        		if(!bath_q.equals(""))
+            {
+               if(!query_b){
+                  sb.append(" bathrooms = " + bath_q);
+                  query_b = true;
+               }
+               else{
+                  sb.append(" AND bathrooms = " + bath_q);
+               }
+            }
+        		
+        		if(query_b)
+        		{
+        		   String sqlStatement = sb.toString();
+           		PreparedStatement dataStatement = conn.prepareStatement(sqlStatement); 
+               ResultSet result = dataStatement.executeQuery();
+               
+               while(count2 < row)
+               {
+                   result.next();
+                   String temp = result.getString("price");
+                   int temp2 = result.getInt("apartment_id");
+                   String temp3 = result.getString("name");
+                   String temp4 = result.getString("zip_code");
+                   int temp5 = result.getInt("accommodates");
+                   String temp7 = result.getString("bedrooms");
+                   String temp6 = result.getString("bathrooms");
+                   
+                   table.getModel().setValueAt(temp, count2, 6);
+                   table.getModel().setValueAt(temp2, count2, 0);
+                   table.getModel().setValueAt(temp3, count2, 1);
+                   table.getModel().setValueAt(temp4, count2, 2);
+                   table.getModel().setValueAt(temp5, count2, 3);
+                   table.getModel().setValueAt(temp6, count2, 4);
+                   table.getModel().setValueAt(temp7, count2, 5);
+                   count2++;
+                   
+                   if(result.isLast())
+                      break;
+               }     
+               
+               table.repaint();
+        		}
         	 }
         	 catch(SQLException sx)
         	 {
         		 sx.printStackTrace();
         	 }
-        	table.repaint();
          }
       });
+	   
+	   JButton accountButton = new JButton("Account Status");
+      accountButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      accountButton.setBounds(533, 295, 191, 58);
+      MainPanel.add(accountButton);
          
 		//Account Info - Main Panel
 		accountButton.addActionListener(new ActionListener() {
