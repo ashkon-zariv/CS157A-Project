@@ -106,7 +106,7 @@ public class MainFrame {
 	private JLabel label_11;
 	
 	private JScrollPane scrollPane = new JScrollPane();
-	int row = 100;
+	int row = 200;
 	int col = 7;
 	Object[][] data = new Object[row][col];
 
