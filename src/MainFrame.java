@@ -471,7 +471,8 @@ public class MainFrame {
 		      int row = table.rowAtPoint(p);
 		      if(me.getClickCount() == 2)
 		      {
-		      /*   data2[0][0] = data[row][0]; DOES NOT WORK*/
+		       //   data2[0][0] = data[row][0]; DOES NOT WORK
+		       //  table_1.getModel().setValueAt(table.getModel().getValueAt(row,0), 0, 0);
 		         MainPanel.setVisible(false);
 		         ReservationPanel.setVisible(true);
 		      }
@@ -1041,7 +1042,7 @@ public class MainFrame {
 		AccountPanel.add(label_11);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(202, 57, 374, 265);
+		scrollPane_1.setBounds(202, 57, 490, 314);
 		AccountPanel.add(scrollPane_1);
 		
 		table_1 = new JTable();
