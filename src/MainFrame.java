@@ -466,17 +466,23 @@ public class MainFrame {
       });
 		
 		table.addMouseListener(new MouseAdapter() {
-		   public void mousePressed(MouseEvent me) {
-		      Point p = me.getPoint();
-		      int row = table.rowAtPoint(p);
-		      if(me.getClickCount() == 2)
-		      {
-		       //   data2[0][0] = data[row][0]; DOES NOT WORK
-		       //  table_1.getModel().setValueAt(table.getModel().getValueAt(row,0), 0, 0);
-		         MainPanel.setVisible(false);
-		         ReservationPanel.setVisible(true);
-		      }
-		   }
+			public void mousePressed(MouseEvent me) {
+			      Point p = me.getPoint();
+			      int row = table.rowAtPoint(p);
+			      int count = 0;
+			      Object o = new Object();
+			      if(me.getClickCount() == 2)
+			      {
+			    	  for(int i = 0; i < col; i++)
+			    	  {
+			    		  o = table.getModel().getValueAt(row, i);
+						table_1.getModel().setValueAt(o, count, i);
+			    	  }
+				      count++;
+			         MainPanel.setVisible(false);
+			         ReservationPanel.setVisible(true);
+			      }
+			}
 		});
 	}
 
@@ -1046,12 +1052,31 @@ public class MainFrame {
 		AccountPanel.add(scrollPane_1);
 		
 		table_1 = new JTable();
-		data2 = data;
 		table_1.setModel(new DefaultTableModel(
-			data2, 
+			new Object[][] {
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+			},
 			new String[] {
-				      "Apt ID", "Description", "Zip Code", "# PPL", "Bath", "Bed", "Price"
-				   }
+				"Apt ID", "Description", "Zip Code", "# PPL", "Bath", "Bed", "Price"
+			}
 		));
 		scrollPane_1.setViewportView(table_1);
 		
