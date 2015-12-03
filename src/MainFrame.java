@@ -74,7 +74,6 @@ public class MainFrame {
 	private JTextField textField_6;
 	private JTextField textField_3;
 	private JTextField textField_7;
-	private JTextField requestField_1;
 	private JTextField requestField_2;
 	private JTextField requestField_3;
 	private JTextField requestField_4;
@@ -84,6 +83,11 @@ public class MainFrame {
 	private String u_pass;
 	private String u_bathrooms;
 	private String u_bedrooms;
+	
+	private String r_address;
+	private String r_bathrooms;
+	private String r_bedrooms;
+	private int r_price;
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -102,6 +106,10 @@ public class MainFrame {
 
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_7;
+	private JLabel lblNewLabel_8;
+	private JLabel lblNewLabel_9;
 	private JLabel label_7;
 	private JLabel label_8;
 	private JLabel label_9;
@@ -476,23 +484,61 @@ public class MainFrame {
 
 			}
 		});
+		
+		lblNewLabel_9 = new JLabel("New label");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      lblNewLabel_9.setBounds(443, 86, 150, 30);
+      
+      lblNewLabel_8 = new JLabel("New label");
+      lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      lblNewLabel_8.setBounds(317, 86, 150, 30);
+      
+      lblNewLabel_7 = new JLabel("New label");
+      lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      lblNewLabel_7.setBounds(182, 86, 125, 30);
+      
+      lblNewLabel_6 = new JLabel("New label");
+      lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+      lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
+      lblNewLabel_6.setBounds(76, 48, 550, 30);
 
 		table.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent me) {
-				Point p = me.getPoint();
-				int row = table.rowAtPoint(p);
-				Object o = new Object();
-				if(me.getClickCount() == 2)
-				{
-					for(int i = 0; i < col; i++)
-					{
-						o = table.getModel().getValueAt(row, i);
-						table_1.getModel().setValueAt(o, count, i);
-					}
-					count++;
-					MainPanel.setVisible(false);
-					ReservationPanel.setVisible(true);
-				}
+			public void mousePressed(MouseEvent me) {	
+			   if(me.getClickCount() == 2)
+			   {
+			      try
+	            {
+	               Point p = me.getPoint();
+	               int row = table.rowAtPoint(p);
+	               
+	               PreparedStatement ps = conn.prepareStatement("SELECT * FROM apartments WHERE apartment_id = ?");
+	               ps.setString(1, table.getModel().getValueAt(row, 0).toString());
+	               
+	               ResultSet result = ps.executeQuery();
+	               result.next();
+	               
+	               r_address = result.getString("address");
+	               r_bathrooms = result.getString("bathrooms");
+	               r_bedrooms = result.getString("bedrooms");
+	               r_price = result.getInt("price");
+	               
+	               lblNewLabel_6.setText("Address : " + r_address);
+	               lblNewLabel_7.setText("Bathrooms : " + r_bathrooms);
+	               lblNewLabel_8.setText("Bedrooms : " + r_bedrooms);
+	               lblNewLabel_9.setText("Price : $" + r_price);
+	               
+	               table_1.getModel().setValueAt(r_address, count, 0);
+	               table_1.getModel().setValueAt(r_price, count, 1);
+	               table_1.getModel().setValueAt(r_bathrooms, count, 2);
+	               table_1.getModel().setValueAt(r_bedrooms, count, 3);
+	               
+	            } catch (SQLException ex) {
+	               ex.printStackTrace();
+	            }
+			      
+			      MainPanel.setVisible(false);
+	            ReservationPanel.setVisible(true);
+			   }				
 			}
 		});
 	}
@@ -855,11 +901,6 @@ public class MainFrame {
 		ReservationPanel.setLayout(null);
 		ReservationPanel.setVisible(false);
 
-		requestField_1 = new JTextField();
-		requestField_1.setBounds(146, 91, 370, 30);
-		ReservationPanel.add(requestField_1);
-		requestField_1.setColumns(10);
-
 		requestField_2 = new JTextField();
 		requestField_2.setColumns(10);
 		requestField_2.setBounds(146, 132, 370, 30);
@@ -879,11 +920,6 @@ public class MainFrame {
 		searchButton.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		searchButton.setBounds(256, 267, 191, 44);
 		ReservationPanel.add(searchButton);
-
-		JLabel location = new JLabel("Location\r\n");
-		location.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		location.setBounds(79, 99, 57, 22);
-		ReservationPanel.add(location);
 
 		JLabel startDate = new JLabel("Start Date\r\n");
 		startDate.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -907,15 +943,6 @@ public class MainFrame {
 		requestLabel.setBounds(21, 275, 257, 30);
 		ReservationPanel.add(requestLabel);
 		requestLabel.setVisible(false);
-
-		//Error asterisks
-
-		final JLabel requestLabel_0 = new JLabel("*");
-		requestLabel_0.setForeground(Color.RED);
-		requestLabel_0.setFont(new Font("Tahoma", Font.BOLD, 16));
-		requestLabel_0.setBounds(526, 97, 46, 14);
-		ReservationPanel.add(requestLabel_0);
-		requestLabel_0.setVisible(false);
 
 		final JLabel requestLabel_1 = new JLabel("*");
 		requestLabel_1.setForeground(Color.RED);
@@ -942,24 +969,23 @@ public class MainFrame {
 		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		lblNewLabel_3.setBounds(302, 11, 117, 38);
 		ReservationPanel.add(lblNewLabel_3);
+		
+		ReservationPanel.add(lblNewLabel_6);
+				
+		ReservationPanel.add(lblNewLabel_7);
+				
+		ReservationPanel.add(lblNewLabel_8);
+		
+		ReservationPanel.add(lblNewLabel_9);
 
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String location = "'" + requestField_1.getText() + "', ";
 				String startDate = "'" + requestField_2.getText() + "', ";
 				String endDate = "'" + requestField_3.getText()+ "', ";
 				String guests = "'" + requestField_4.getText() + "'";
-				if(requestField_1.getText().length() == 0)
-				{
-					requestLabel_0.setVisible(true);
-					requestLabel.setVisible(true);
-					requestField_1.setText("");
-				}
-				else
-				{
-					requestLabel_0.setVisible(false);
-				}
+				String location = "'" + r_address + "', ";
+
 				if(requestField_2.getText().length() == 0)
 				{
 					requestLabel_1.setVisible(true);
@@ -990,10 +1016,16 @@ public class MainFrame {
 				{
 					requestLabel_3.setVisible(false);
 				}
-				if(!requestLabel_0.isVisible() && !requestLabel_1.isVisible() && !requestLabel_2.isVisible()
+				if(!requestLabel_1.isVisible() && !requestLabel_2.isVisible()
 						&& !requestLabel_3.isVisible())
 				{
 					try{
+					   table_1.getModel().setValueAt(requestField_2.getText(), count, 4);
+					   table_1.getModel().setValueAt(requestField_3.getText(), count, 5);
+					   table_1.getModel().setValueAt(requestField_4.getText(), count, 6);
+					   
+					   count++;
+					   
 						Statement stmt = conn.createStatement();
 						String sql = "INSERT INTO requests "
 								+ "VALUES ('0', '0', " + location + startDate + endDate 
@@ -1042,66 +1074,85 @@ public class MainFrame {
 		AccountPanel.add(btnNewButton_1);
 
 		lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_4.setBounds(22, 92, 200, 29);
 		AccountPanel.add(lblNewLabel_4);
 
 		label_7 = new JLabel("");
-		label_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label_7.setBounds(22, 132, 200, 29);
 		AccountPanel.add(label_7);
 
 		label_8 = new JLabel("");
-		label_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_8.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label_8.setBounds(22, 172, 200, 29);
 		AccountPanel.add(label_8);
 
 		label_9 = new JLabel("");
-		label_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_9.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label_9.setBounds(22, 212, 200, 29);
 		AccountPanel.add(label_9);
 
 		label_10 = new JLabel("");
-		label_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label_10.setBounds(22, 253, 200, 29);
 		AccountPanel.add(label_10);
 
 		label_11 = new JLabel("");
-		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_11.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(202, 57, 490, 314);
+		scrollPane_1.setBounds(202, 57, 522, 314);
 		AccountPanel.add(scrollPane_1);
 
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-				},
-				new String[] {
-						"Apt ID", "Description", "Zip Code", "# PPL", "Bath", "Bed", "Price"
-				}
-				));
+		   new Object[][] {
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		      {null, null, null, null, null, null, null},
+		   },
+		   new String[] {
+		      "Address", "Price", "Bath", "Bed", "Start", "End", "# PPL"
+		   }
+		) {
+		   boolean[] columnEditables = new boolean[] {
+		      false, false, false, false, false, false, false
+		   };
+		   public boolean isCellEditable(int row, int column) {
+		      return columnEditables[column];
+		   }
+		});
+		table_1.getColumnModel().getColumn(0).setPreferredWidth(284);
+		table_1.getColumnModel().getColumn(1).setPreferredWidth(70);
+		table_1.getColumnModel().getColumn(2).setResizable(false);
+		table_1.getColumnModel().getColumn(2).setPreferredWidth(47);
+		table_1.getColumnModel().getColumn(3).setResizable(false);
+		table_1.getColumnModel().getColumn(3).setPreferredWidth(47);
+		table_1.getColumnModel().getColumn(4).setResizable(false);
+		table_1.getColumnModel().getColumn(4).setPreferredWidth(50);
+		table_1.getColumnModel().getColumn(5).setResizable(false);
+		table_1.getColumnModel().getColumn(5).setPreferredWidth(50);
+		table_1.getColumnModel().getColumn(6).setResizable(false);
+		table_1.getColumnModel().getColumn(6).setPreferredWidth(47);
 		scrollPane_1.setViewportView(table_1);
 
 		//Back Button - Account Panel
