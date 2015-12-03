@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -22,6 +23,8 @@ import java.awt.Component;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.TextArea;
 
 import javax.swing.JLabel;
@@ -36,10 +39,12 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 import java.sql.*;
+
 import javax.swing.JList;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -202,6 +207,7 @@ public class MainFrame {
 		}
 		createTable();
 	}
+	
 	public void createTable()
 	{
 		table.setModel(new DefaultTableModel(
@@ -311,79 +317,90 @@ public class MainFrame {
 		lblFilterResults.setBounds(554, 18, 157, 26);
 		MainPanel.add(lblFilterResults);
 		
-		  filterButton.addActionListener(new ActionListener() {
-	         public void actionPerformed(ActionEvent arg0) {
-	        	 try
-	        	 {
-	        		 int count2 = 0;
-		     		PreparedStatement dataStatement = conn.prepareStatement("SELECT * FROM apartments WHERE bathrooms = ?");
-		               
-		               u_bathrooms = String.valueOf(bathroomsTextField.getText());
-		               
-		               dataStatement.setString(1, u_bathrooms);
-		               
-		               ResultSet result = dataStatement.executeQuery();
-		               while(count2 < row)
-		               {
-		            	   result.next();
-		   				String temp = result.getString("price");
-						int temp2 = result.getInt("apartment_id");
-						String temp3 = result.getString("name");
-						String temp4 = result.getString("zip_code");
-						int temp5 = result.getInt("accommodates");
-						String temp7 = result.getString("bedrooms");
-						String temp6 = result.getString("bathrooms");
-						
-						data[count2][6] = temp;
-						data[count2][0] = temp2;
-						data[count2][1] = temp3;
-						data[count2][2] = temp4;
-						data[count2][3] = temp5;
-						data[count2][4] = temp6;
-						data[count2][5] = temp7;
-		            	   count2++;
-		               }
-		               
-	        	 }
-	        	 catch(SQLException sx)
-	        	 {
-	        		 sx.printStackTrace();
-	        	 }
-	        	 createTable();
-	         }
-	      });
-	      
+	  filterButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent arg0) {
+        	 try
+        	 {
+        		int count2 = 0;
+	     		PreparedStatement dataStatement = conn.prepareStatement("SELECT * FROM apartments WHERE bathrooms = ?");
+	               
+            u_bathrooms = String.valueOf(bathroomsTextField.getText());
+            
+            dataStatement.setString(1, u_bathrooms);
+	               
+            ResultSet result = dataStatement.executeQuery();
+            while(count2 < row)
+            {
+	            result.next();
+	   		   String temp = result.getString("price");
+					int temp2 = result.getInt("apartment_id");
+					String temp3 = result.getString("name");
+					String temp4 = result.getString("zip_code");
+					int temp5 = result.getInt("accommodates");
+					String temp7 = result.getString("bedrooms");
+					String temp6 = result.getString("bathrooms");
+					
+					table.getModel().setValueAt(temp, count2, 6);
+					table.getModel().setValueAt(temp2, count2, 0);
+					table.getModel().setValueAt(temp3, count2, 1);
+					table.getModel().setValueAt(temp4, count2, 2);
+					table.getModel().setValueAt(temp5, count2, 3);
+					table.getModel().setValueAt(temp6, count2, 4);
+					table.getModel().setValueAt(temp7, count2, 5);
+            	count2++;
+            }     
+            result = null;
+        	 }
+        	 catch(SQLException sx)
+        	 {
+        		 sx.printStackTrace();
+        	 }
+        	table.repaint();
+         }
+      });
+         
 		//Account Info - Main Panel
-				accountButton.addActionListener(new ActionListener() {
-		         public void actionPerformed(ActionEvent e) {
-		            PreparedStatement ps;
-		            try{
-		            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
-		            ps.setString(1, u_username);
-		            ps.setString(2, u_pass);
-		            
-		            ResultSet result = ps.executeQuery();
-		            result.next();
-		            
-		            lblNewLabel_4.setText("Name: " + result.getString("name"));
-		            label_7.setText("E-mail: " + result.getString("email"));
-		            label_8.setText("Address: " + result.getString("address"));
-		            label_9.setText("City: " + result.getString("city"));
-		            label_10.setText("State: " + result.getString("state"));
-		            label_11.setText("Zip Code: " + result.getString("zip_code"));
-		            
-		            } catch (SQLException ex) {
-		               ex.printStackTrace();
-		            }
-		            
-		            MainPanel.setVisible(false);
-		            AccountPanel.setVisible(true);
-		            
-		         }
-		      });
+		accountButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            PreparedStatement ps;
+            try{
+            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
+            ps.setString(1, u_username);
+            ps.setString(2, u_pass);
+            
+            ResultSet result = ps.executeQuery();
+            result.next();
+            
+            lblNewLabel_4.setText("Name: " + result.getString("name"));
+            label_7.setText("E-mail: " + result.getString("email"));
+            label_8.setText("Address: " + result.getString("address"));
+            label_9.setText("City: " + result.getString("city"));
+            label_10.setText("State: " + result.getString("state"));
+            label_11.setText("Zip Code: " + result.getString("zip_code"));
+            
+            } catch (SQLException ex) {
+               ex.printStackTrace();
+            }
+            
+            MainPanel.setVisible(false);
+            AccountPanel.setVisible(true);
+            
+         }
+      });
+		
+		table.addMouseListener(new MouseAdapter() {
+		   public void mousePressed(MouseEvent me) {
+		      Point p = me.getPoint();
+		      int row = table.rowAtPoint(p);
+		      if(me.getClickCount() == 2)
+		      {
+		         
+		      }
+		   }
+		});
 	}
 
-		//SignInPanel elements
+	//SignInPanel elements
 	public void SignInPanel()
 	{
 		SignInPanel = new JPanel();
@@ -444,40 +461,40 @@ public class MainFrame {
 		lblNewLabel_2.setVisible(false);
 		
 		//SignUp Button - SignIn Panel
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						SignInPanel.setVisible(false);
-						SignUpPanel.setVisible(true);
-					}
-				});
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SignInPanel.setVisible(false);
+				SignUpPanel.setVisible(true);
+			}
+		});
 				
-				//SignIn Button - SignIn Panel
-			      button_1.addActionListener(new ActionListener() {
-			         public void actionPerformed(ActionEvent e) {
-			            PreparedStatement ps;
-			            try {
-			               ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
-			               
-			               u_username = String.valueOf(textField.getText());
-			               u_pass = String.valueOf(passwordField.getPassword());
-			               
-			               ps.setString(1, u_username);
-			               ps.setString(2, u_pass);
-			               
-			               ResultSet result = ps.executeQuery();
-			               if(result.next()){
-			                  JOptionPane.showMessageDialog(null, "Successfully logged in.");
-			                  MainPanel.setVisible(true);
-			                  SignInPanel.setVisible(false);
-			               }
-			               else{
-			                  JOptionPane.showMessageDialog(null, "Invalid email or password");
-			               }
-			            } catch (SQLException ex) {
-			               ex.printStackTrace();
-			            }
-			         }
-			      });
+		//SignIn Button - SignIn Panel
+      button_1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            PreparedStatement ps;
+            try {
+               ps = conn.prepareStatement("SELECT email, password FROM customers WHERE email = ? AND password = ?");
+               
+               u_username = String.valueOf(textField.getText());
+               u_pass = String.valueOf(passwordField.getPassword());
+               
+               ps.setString(1, u_username);
+               ps.setString(2, u_pass);
+               
+               ResultSet result = ps.executeQuery();
+               if(result.next()){
+                  JOptionPane.showMessageDialog(null, "Successfully logged in.");
+                  MainPanel.setVisible(true);
+                  SignInPanel.setVisible(false);
+               }
+               else{
+                  JOptionPane.showMessageDialog(null, "Invalid email or password");
+               }
+            } catch (SQLException ex) {
+               ex.printStackTrace();
+            }
+         }
+      });
 	}
 	public void SignUpPanel()
 	{
@@ -951,16 +968,6 @@ public class MainFrame {
 		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
-		   
-		//Back Button - Main Panel
-      /*backToSearchButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            
-            MainPanel.setVisible(false);
-            SearchPanel.setVisible(true);
-            
-         }
-      });*/
 		
 		//Back Button - Account Panel
 		btnNewButton_1.addActionListener(new ActionListener() {
