@@ -322,9 +322,12 @@ public class MainFrame {
         		boolean query_b = false;
         		String zip_q = String.valueOf(textField_4.getText());
         		String minP_q = String.valueOf(minPriceTextField.getText());
-        		String maxP_q = String.valueOf(minPriceTextField.getText());
+        		String maxP_q = String.valueOf(maxPriceTextField.getText());
         		String bed_q = String.valueOf(bathroomsTextField.getText());
-        		String bath_q = String.valueOf(bathroomsTextField.getText());
+        		String bath_q = String.valueOf(textField_2.getText());
+        		
+        		PreparedStatement dataStatement;
+            ResultSet result;
         		
         		if(zip_q.length() == 5)
         		{
@@ -384,41 +387,46 @@ public class MainFrame {
         		if(query_b)
         		{
         		   String sqlStatement = sb.toString();
-           		PreparedStatement dataStatement = conn.prepareStatement(sqlStatement); 
-               ResultSet result = dataStatement.executeQuery();
-               
-               while(count2 < row)
-               {
-                   result.next();
-                   String temp = result.getString("price");
-                   int temp2 = result.getInt("apartment_id");
-                   String temp3 = result.getString("name");
-                   String temp4 = result.getString("zip_code");
-                   int temp5 = result.getInt("accommodates");
-                   String temp7 = result.getString("bedrooms");
-                   String temp6 = result.getString("bathrooms");
-                   
-                   table.getModel().setValueAt(temp, count2, 6);
-                   table.getModel().setValueAt(temp2, count2, 0);
-                   table.getModel().setValueAt(temp3, count2, 1);
-                   table.getModel().setValueAt(temp4, count2, 2);
-                   table.getModel().setValueAt(temp5, count2, 3);
-                   table.getModel().setValueAt(temp6, count2, 4);
-                   table.getModel().setValueAt(temp7, count2, 5);
-                   count2++;
-                   
-                   if(result.isLast())
-                      break;
-               }     
-               
-               table.repaint();
+           		dataStatement = conn.prepareStatement(sqlStatement); 
+               result = dataStatement.executeQuery();
         		}
+        		else
+        		{
+        		   dataStatement = conn.prepareStatement("SELECT * FROM apartments");
+        		   result = dataStatement.executeQuery();
+        		}
+               
+            while(count2 < row)
+            {
+                result.next();
+                String temp = result.getString("price");
+                int temp2 = result.getInt("apartment_id");
+                String temp3 = result.getString("name");
+                String temp4 = result.getString("zip_code");
+                int temp5 = result.getInt("accommodates");
+                String temp7 = result.getString("bedrooms");
+                String temp6 = result.getString("bathrooms");
+                
+                table.getModel().setValueAt(temp, count2, 6);
+                table.getModel().setValueAt(temp2, count2, 0);
+                table.getModel().setValueAt(temp3, count2, 1);
+                table.getModel().setValueAt(temp4, count2, 2);
+                table.getModel().setValueAt(temp5, count2, 3);
+                table.getModel().setValueAt(temp6, count2, 4);
+                table.getModel().setValueAt(temp7, count2, 5);
+                count2++;
+                
+                if(result.isLast())
+                   break;
+            }
+            
+            table.repaint();
         	 }
         	 catch(SQLException sx)
         	 {
         		 sx.printStackTrace();
         	 }
-         }
+        }
       });
 	   
 	   JButton accountButton = new JButton("Account Status");
