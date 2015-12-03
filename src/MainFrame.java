@@ -109,6 +109,8 @@ public class MainFrame {
 	int row = 100;
 	int col = 7;
 	Object[][] data = new Object[row][col];
+	Object[][] data2;
+	private JTable table_1;
 
 
 	private static boolean validate(String emailStr) {
@@ -387,7 +389,7 @@ public class MainFrame {
         		if(query_b)
         		{
         		   String sqlStatement = sb.toString();
-           		dataStatement = conn.prepareStatement(sqlStatement); 
+           		dataStatement = conn.prepareStatement(sqlStatement + " ORDER BY price"); 
                result = dataStatement.executeQuery();
         		}
         		else
@@ -469,7 +471,9 @@ public class MainFrame {
 		      int row = table.rowAtPoint(p);
 		      if(me.getClickCount() == 2)
 		      {
-		         
+		      /*   data2[0][0] = data[row][0]; DOES NOT WORK*/
+		         MainPanel.setVisible(false);
+		         ReservationPanel.setVisible(true);
 		      }
 		   }
 		});
@@ -985,7 +989,7 @@ public class MainFrame {
 					}
 
 					ReservationPanel.setVisible(false);
-					MainPanel.setVisible(true);
+					AccountPanel.setVisible(true);
 				}
 			}
 		});
@@ -1005,14 +1009,6 @@ public class MainFrame {
 		JButton btnNewButton_1 = new JButton("Back to Search");
 		btnNewButton_1.setBounds(22, 17, 139, 35);
 		AccountPanel.add(btnNewButton_1);
-		
-		JList list = new JList();
-		list.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-		      new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pending Requests",
-		            TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0))));
-		
-		list.setBounds(232, 68, 469, 287);
-		AccountPanel.add(list);
 		
 		lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -1043,6 +1039,20 @@ public class MainFrame {
 		label_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_11.setBounds(22, 293, 200, 29);
 		AccountPanel.add(label_11);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(202, 57, 374, 265);
+		AccountPanel.add(scrollPane_1);
+		
+		table_1 = new JTable();
+		data2 = data;
+		table_1.setModel(new DefaultTableModel(
+			data2, 
+			new String[] {
+				      "Apt ID", "Description", "Zip Code", "# PPL", "Bath", "Bed", "Price"
+				   }
+		));
+		scrollPane_1.setViewportView(table_1);
 		
 		//Back Button - Account Panel
 		btnNewButton_1.addActionListener(new ActionListener() {
