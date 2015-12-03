@@ -1005,6 +1005,7 @@ public class MainFrame {
 						label_9.setText("City: " + result.getString("city"));
 						label_10.setText("State: " + result.getString("state"));
 						label_11.setText("Zip Code: " + result.getString("zip_code"));
+						
 					}
 					catch (Exception ex){
 						ex.printStackTrace();
