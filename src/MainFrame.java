@@ -423,7 +423,15 @@ public class MainFrame {
 						count2++;
 
 						if(result.isLast())
+						{
+							while(count2 < row)
+							{
+								for(int i = 0; i < col; i ++)
+									table.getModel().setValueAt(null, count2, i);
+								count2++;
+							}
 							break;
+						}
 					}
 
 					table.repaint();
