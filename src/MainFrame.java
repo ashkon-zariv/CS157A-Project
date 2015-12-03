@@ -323,8 +323,8 @@ public class MainFrame {
         		String zip_q = String.valueOf(textField_4.getText());
         		String minP_q = String.valueOf(minPriceTextField.getText());
         		String maxP_q = String.valueOf(maxPriceTextField.getText());
-        		String bed_q = String.valueOf(bathroomsTextField.getText());
-        		String bath_q = String.valueOf(textField_2.getText());
+        		String bed_q = String.valueOf(textField_2.getText());
+        		String bath_q = String.valueOf(bathroomsTextField.getText());
         		
         		PreparedStatement dataStatement;
             ResultSet result;
