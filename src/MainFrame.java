@@ -897,7 +897,7 @@ public class MainFrame {
 		requestLabel.setForeground(Color.RED);
 		requestLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		requestLabel.setBounds(21, 275, 257, 30);
-		SignUpPanel.add(requestLabel);
+		ReservationPanel.add(requestLabel);
 		requestLabel.setVisible(false);
 
 		//Error asterisks
@@ -972,7 +972,7 @@ public class MainFrame {
 				{
 					requestLabel_2.setVisible(false);
 				}
-				if(requestField_4.getText().length() == 0)
+				if(requestField_4.getText().length() == 0 || !(requestField_4.getText().matches("^[+-]?\\d+$")))
 				{
 					requestLabel_3.setVisible(true);
 					requestLabel.setVisible(true);
