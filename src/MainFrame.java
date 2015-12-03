@@ -990,6 +990,21 @@ public class MainFrame {
 								+ "VALUES ('0', '0', " + location + startDate + endDate 
 								+ guests + ");";
 						stmt.executeUpdate(sql);
+						
+						PreparedStatement ps;
+		            ps = conn.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
+		            ps.setString(1, u_username);
+		            ps.setString(2, u_pass);
+		            
+		            ResultSet result = ps.executeQuery();
+		            result.next();
+		            
+		            lblNewLabel_4.setText("Name: " + result.getString("name"));
+		            label_7.setText("E-mail: " + result.getString("email"));
+		            label_8.setText("Address: " + result.getString("address"));
+		            label_9.setText("City: " + result.getString("city"));
+		            label_10.setText("State: " + result.getString("state"));
+		            label_11.setText("Zip Code: " + result.getString("zip_code"));
 					}
 					catch (Exception ex){
 						ex.printStackTrace();
