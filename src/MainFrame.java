@@ -108,6 +108,7 @@ public class MainFrame {
 	private JScrollPane scrollPane = new JScrollPane();
 	int row = 200;
 	int col = 7;
+	int count = 0;
 	Object[][] data = new Object[row][col];
 	Object[][] data2;
 	private JTable table_1;
@@ -469,14 +470,13 @@ public class MainFrame {
 			public void mousePressed(MouseEvent me) {
 			      Point p = me.getPoint();
 			      int row = table.rowAtPoint(p);
-			      int count = 0;
 			      Object o = new Object();
 			      if(me.getClickCount() == 2)
 			      {
 			    	  for(int i = 0; i < col; i++)
 			    	  {
 			    		  o = table.getModel().getValueAt(row, i);
-						table_1.getModel().setValueAt(o, count, i);
+			    		  table_1.getModel().setValueAt(o, count, i);
 			    	  }
 				      count++;
 			         MainPanel.setVisible(false);
